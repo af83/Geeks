@@ -81,26 +81,41 @@ get('/test', function() {
     )
 });
 
+
 // Write a geek to the file system
-get('/new', function(file) {
+post('/new', function() {
     var self = this;
-    var file_name = set('root')+"/geeks/toto.json";
-    posix.open(file_name, process.O_CREAT | process.O_WRONLY, 0666)
-    .addCallback(function(fd){
-            posix.write(fd, '{"name": "toto", "pole": "pole de toto"}')
-            .addCallback(function(bytes){
-                posix.close(fd)
-                .addCallback(function(){
-                    debug(file_name)
-                    emitter.emit("newGeeks", file_name);
-                })
+    debug(this.param('name'))
+    var file_name = set('root')+"/geeks/"+this.param('name')+".json";
+    var fd = posix.open(file_name, process.O_CREAT | process.O_WRONLY, 0666)
+    .addCallback(function (fd){
+        posix.write(fd, JSON.stringify(self.params.post)) // tojson
+        .addCallback(function(bytes){
+            posix.close(fd)
+            .addCallback(function(){
+                debug(file_name)
+                emitter.emit("newGeeks", file_name);
                 self.halt(200, "done");
             }).addErrback(function(){
                 self.halt(400, "failed");
             });
-    }).addErrback(function(){
-        self.halt(400, "failed");
+        }).addErrback(function(){
+                self.halt(400, "failed");
+         })
+        .addErrback(function(){
+            self.halt(400, "failed");
+        });
     });
+});
+
+
+/**
+ * form to create a geek to the file system
+ * @tdo gruik, returning an hard file, haven't debug this.render('new_geek.mustache.html') for now.
+ */
+get('/new', function(){
+    debug('plop');
+    this.sendfile(set('root')+'/views/new_geek.mustache.html');
 });
 
 // Render static files

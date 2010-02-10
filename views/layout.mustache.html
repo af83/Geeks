@@ -7,21 +7,43 @@
   <!-- 
     <link rel="stylesheet" type="text/css" href="/stylesheets/base.css" />
     -->
+    <link type="text/css" href="/js/development-bundle/themes/base/ui.all.css" rel="stylesheet" />
+    <link type="text/css" href="/js/development-bundle/themes/sunny/ui.all.css" rel="stylesheet" />
+    <link type="text/css" href="/css/sunny/jquery-ui-1.7.2.custom.css" rel="stylesheet" />	
 </head>
 <body>
-    <p>header.</p>
+    <p>
+        <ul>
+            <li><a class="tool as_dialog" href="/new">new geek</a></li>
+        </ul>
+    </p>
     {{{body}}}
     <div id="events"></div>
     <p>footer.</p>
     <script src="js/jquery-1.4.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.7.2.custom.min.js"></script>
+    <script src="js/dialog.js"></script>
     <script type="text/javascript">
-        function poll(){
+        // Events chanel
+       function poll(){
             $.getJSON('/events', function(geek){
                 $('#events').append('<div>' + geek.name + '</div>');
                 poll();
             })
         };
         poll();
+    </script>
+    <script type="text/javascript">
+        // every link with a classname 'as_dialog' will open as dialog on click.
+        $(document).ready(
+            function(){
+                $('a.as_dialog')
+                .live('click',
+                    function(event){
+                        event.preventDefault();
+                        (new GeeksDialog($(this).attr('href'))).show();
+                });
+        });
     </script>
 </body>
 </html>
