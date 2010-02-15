@@ -13,8 +13,28 @@ configure(function() {
 
 // Home page
 get('/', function() {
+    self = this;
     this.contentType('text');
-    this.render('home.mustache.html', { locals: { name: 'oz'} });
+    posix.readdir(set('root')+"/geeks")
+    .addCallback(function(files_name) {
+            var acc = [];
+            emitter.addListener("oneMoreFile",
+                function(geek){
+                    acc.push(geek);
+                    if( acc.length  == files_name.length) {
+                        self.render('home.mustache.html', { locals: { geeks: acc}})
+                    }
+            })
+            for(file_name in files_name) {
+                posix.cat(set('root')+"/geeks/"+files_name[file_name])
+                .addCallback(function(data) {
+                    emitter.emit("oneMoreFile", JSON.parse(data))
+                });
+            }
+        }
+    )
+
+    var geeks = [{name: '1'}, {name: '22'}]
 });
 
 /**
@@ -29,21 +49,21 @@ get('/events', function() {
     // watching geeks dir
     posix.readdir(set('root')+"/geeks")
     .addCallback(function(files_name) {
-            // use for watching a geek file and emit it on change as json.
-            var watchFile = function(file_name){
-                process.watchFile(file_name,
-                    function(current, previous){
-                        posix.cat(file_name)
-                        .addCallback(function(data){
-                                self.halt(200, data);
-                        });
-                    }
-                )
-            }
-            // listenning at each geek change
-            for(file_name in files_name){
-                watchFile(set('root')+"/geeks/"+files_name[file_name]);
-            }
+        // use for watching a geek file and emit it on change as json.
+        var watchFile = function(file_name){
+            process.watchFile(file_name,
+                function(current, previous){
+                    posix.cat(file_name)
+                    .addCallback(function(data){
+                       self.halt(200, data);
+                    });
+                }
+            )
+        }
+        // listenning at each geek change
+        for(file_name in files_name){
+            watchFile(set('root')+"/geeks/"+files_name[file_name]);
+        }
     })
     emitter.addListener("newGeeks", function(file_name){
         posix.cat(file_name)
@@ -82,8 +102,10 @@ get('/test', function() {
 });
 
 
-// Write a geek to the file system
-post('/new', function() {
+/*
+* Write a geek to the file system.
+*/
+post('/geek/new', function() {
     var self = this;
     debug(this.param('name'))
     var file_name = set('root')+"/geeks/"+this.param('name')+".json";
@@ -111,10 +133,9 @@ post('/new', function() {
 
 /**
  * form to create a geek to the file system
- * @tdo gruik, returning an hard file, haven't debug this.render('new_geek.mustache.html') for now.
+ * @todo gruik, returning an hard file, haven't debug this.render('new_geek.mustache.html') for now.
  */
-get('/new', function(){
-    debug('plop');
+get('/geek/new', function(){
     this.sendfile(set('root')+'/views/new_geek.mustache.html');
 });
 

@@ -102,7 +102,14 @@ var Mustache = function() {
             return that.render(content, that.merge(context,
                     that.create_context(row)), partials, true);
           }).join("");
-        } else if(value) { // boolean section
+        } 
+        else if(typeof(value) == object ) { // Enumerable, Let's loop!
+          return that.map(value, function(row) {
+            return that.render(content, that.merge(context,
+                    that.create_context(row)), partials, true);
+          }).join("");
+        } 
+        else if(value) { // boolean section
           return that.render(content, context, partials, true);
         } else {
           return "";

@@ -23,15 +23,14 @@
                 <ul class="geeks">
                   {{#geeks}}
                   <li class="geek {{pole}}" id="{{name}}">
-                  <img src="/images/geeks/{{name.png}}" alt="{{name}}" title="{{name}}" />
-                  <form action="save" method="post" >
-                    <input type="hidden" name="x" value="{{x}}" />
-                    <input type="hidden" name="y" value="{{y}}" />
-                    <input type="hidden" name="z" value="{{z]}}" />
-                    <input type="hidden" name="name" value="{{name}}" />
-                    <input type="hidden" name="text" value="{{text}}" />
+                  <img src="/images/geeks/{{name}}.png" alt="{{name}}" title="{{name}}" />
+                  <ul>
+                    {{#.}}
+                    <li>.: {{.[.]}} <li/>
+                    {{/.}}
                   </form>
                   </li>
+                  <ul>
                   {{/geeks}}
                 </ul>
               </div>
