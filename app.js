@@ -22,7 +22,7 @@ get('/', function() {
                 function(geek){
                     acc.push(geek);
                     if( acc.length  == files_name.length) {
-                        self.render('home.mustache.html', { locals: { geeks: acc}})
+                        self.render('home.haml.html', { locals: { geeks: acc}})
                     }
             })
             for(file_name in files_name) {
@@ -88,7 +88,7 @@ get('/test', function() {
                 function(geek){
                     acc.push(geek);
                     if( acc.length  == files_name.length) {
-                        self.render('test.mustache.html', { locals: { geeks: acc}})
+                        self.render('test.haml.html', { locals: { geeks: acc}})
                     }
             })
             for(file_name in files_name) {
@@ -136,7 +136,8 @@ post('/geek/new', function() {
  * @todo gruik, returning an hard file, haven't debug this.render('new_geek.mustache.html') for now.
  */
 get('/geek/new', function(){
-    this.sendfile(set('root')+'/views/new_geek.mustache.html');
+    //this.sendfile(set('root')+'/views/new_geek.haml.html');
+    this.render("new_geek.haml.html", {layout: false});
 });
 
 // Render static files
