@@ -1,9 +1,0 @@
-:each color in colors
-  .preview{style: "color: " + color + ";"}&= name
-:each item in data
-  :if item.age < 100
-    %dl
-      :each name, value in item
-        %dt&= name
-        %dd&= value
-  

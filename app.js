@@ -1,6 +1,9 @@
-var posix = require('posix');
-var events  = require("events")
-var emitter = new events.EventEmitter()
+// My little node.js stuff.
+var posix   = require('posix'),
+    events  = require("events"),
+    emitter = new events.EventEmitter()
+
+// Load Express from Visionmedia
 require.paths.unshift('vendor/express/lib');
 require('express');
 require('express/plugins');
