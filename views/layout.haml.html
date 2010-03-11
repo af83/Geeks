@@ -18,22 +18,21 @@
     %script{type: "text/javascript", src:"js/jquery-ui-1.7.2.custom.min.js"}
     %script{type: "text/javascript", src:"js/dialog.js"}
     :javascript
-       // Events chanel
-       function poll(){
-            $.getJSON('/events', function(geek){
-                $('#events').append('<div>' + geek.name + '</div>');
-                poll();
-            })
-        };
-        poll();
+       // Events channel
+       (function poll(){
+         $.getJSON('/events', function(geek)
+         {
+           $('#events').append('<div>' + geek.name + '</div>');
+           poll();
+         });
+       })();
     :javascript
-        // every link with a classname 'as_dialog' will open as dialog on click.
-        $(document).ready(
-            function(){
-                $('a.as_dialog')
-                .live('click',
-                    function(event){
-                        event.preventDefault();
-                        (new GeeksDialog($(this).attr('href'))).show();
-                });
+        // Every link with a classname 'as_dialog' will open as dialog on click.
+        $(document).ready(function()
+        {
+          $('a.as_dialog').live('click', function(event)
+          {
+            event.preventDefault();
+            ( new GeeksDialog($(this).attr('href')) ).show();
+          });
         });
