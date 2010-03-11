@@ -3,21 +3,20 @@ var fs      = require("fs"),
     events  = require("events"),
     emitter = new events.EventEmitter()
 
-// HAML
-require.paths.unshift("vendor/haml/lib");
-require("haml");
-
 // Express
 require.paths.unshift("vendor/express/lib");
 require("express");
 require("express/plugins");
+var utils = require('express/utils'),
+    kiwi  = require('kiwi');
 
 configure(function() {
-    use(MethodOverride);
-    use(ContentLength);
-    use(CommonLogger);
-    set("root", __dirname);                  // Root dir
-    set("geeks", set("root") + "/geeks");    // Geeks JSON store dir
+  kiwi.seed('haml');
+  use(MethodOverride);
+  use(ContentLength);
+  use(CommonLogger);
+  set("root", __dirname);                  // Root dir
+  set("geeks", set("root") + "/geeks");    // Geeks JSON store dir
 });
 
 /**
@@ -29,10 +28,13 @@ get('/', function() {
 
   // Read all geek files in local geek/ directory
   fs.readdir(set("geeks"), function(err, files) {
+    if (err)
+      self.halt(400, "Could not find a geek list in: " + set("geeks"));
+
     var acc = [];
     emitter.addListener("oneMoreFile", function(geek)
     {
-      debug("one more file called");
+      debug("One more file called.");
       acc.push(geek);
       if (acc.length  == files.length)
         self.render("index.haml.html", { locals: { geeks: acc } });
@@ -42,6 +44,8 @@ get('/', function() {
     for (file_name in files) {
       fs.readFile(set("geeks") + "/" + files[file_name], function(err, data)
       {
+        if (err)
+          self.halt(400, "Could not load geek in file: " + file_name);
         emitter.emit("oneMoreFile", JSON.parse(data));
       });
     }
@@ -59,13 +63,18 @@ get("/events", function() {
     this.contentType("text");
 
     // watching geeks dir
+    // @fixme this only watches one file at a time
     fs.readdir(set("geeks"), function(err, files)
     {
+      if (err)
+        self.halt(400, "failed");
+
       // Watch a file, emit it on change.
       var watchFile = function(name)
       {
-        debug("watch file: " + name);
+        debug("watchFile: " + name);
         fs.watchFile(name, function(current, previous) {
+          debug(name + " has changed, sending it.");
           fs.readFile(name, function(err, data) {
             if (err)
               self.halt(400, "failed");
@@ -81,6 +90,7 @@ get("/events", function() {
     });
 
     // New file in geeks/ directory
+    // @see POST action for: /geek/create
     emitter.addListener("newGeeks", function(file_name) {
       fs.readFile(file_name, function(err, data) {
         if (err)
