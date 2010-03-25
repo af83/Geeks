@@ -7,10 +7,9 @@
     %link{ type: "text/css", rel: "stylesheet", href: "/js/development-bundle/themes/sunny/ui.all.css" }
     %link{ type: "text/css", rel: "stylesheet", href: "/css/sunny/jquery-ui-1.7.2.custom.css" }
   %body
-    %p
-      %ul
-        %li
-          %a.tool.as_dialog{ href:"/geek/new" } new geek
+    %ul
+      %li
+        %a.tool.as_dialog{ href:"/geek/new" } new geek
     = body
     #events
     %p footer.
@@ -22,7 +21,7 @@
        (function poll(){
          $.getJSON('/events', function(geek)
          {
-           $('#events').append('<div>' + geek.name + '</div>');
+         $('#geeks').append('<li><img src="/images/geeks/' + geek.name + '">' + geek.name + '</li>');
            poll();
          });
        })();
