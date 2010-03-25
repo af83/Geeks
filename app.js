@@ -110,7 +110,7 @@ post("/geek/create", function() {
   {
     if (err)
       self.halt(400, "failed");
-    fs.write(fd, JSON.stringify(self.params.post), function(err, bytes) {
+    fs.write(fd, JSON.stringify(self.params.post), null, null, function(err, bytes) {
       if (err)
         self.halt(400, "failed");
       fs.close(fd, function(err)
