@@ -115,10 +115,6 @@ GeeksDialog.prototype = {
                          success: function()
                          {
                              dialog.dialog('destroy');
-                            if(this.options.history)
-                            {
-                                $.historyLoad($.historyCurrentHash.substr(1));
-                            }
                          }
                         });
                 };

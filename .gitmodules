@@ -4,3 +4,6 @@
 [submodule "vendor/haml"]
 	path = vendor/haml
 	url = git://github.com/creationix/haml-js.git
+[submodule "lib/support/mongodb"]
+	path = lib/support/mongodb
+	url = git://github.com/christkv/node-mongodb-native.git
