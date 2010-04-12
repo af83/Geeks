@@ -2,8 +2,7 @@ GLOBAL.DEBUG = true;
 var sys = require('sys')
 
 // My little node.js stuff.
-var fs      = require("fs"),
-    events  = require("events")
+var events  = require("events")
 
 // Express
 require.paths.unshift("vendor/express/lib");
@@ -18,8 +17,6 @@ configure(function() {
   use(MethodOverride);
   use(ContentLength);
   use(CommonLogger);
-  set("root", __dirname);                  // Root dir
-  set("geeks", set("root") + "/geeks");    // Geeks JSON store dir
 });
 
 process.mixin(GLOBAL, require("./Geeks"))
