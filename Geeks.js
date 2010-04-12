@@ -1,8 +1,7 @@
 GLOBAL.DEBUG = true;
 var sys     = require('sys'),
 fs      = require("fs"),
-events  = require("events"),
-emitter = new events.EventEmitter()
+events  = require("events")
 
 require.paths.unshift("./lib/support/mongodb/lib")
 var mongo = require('mongodb/db')
@@ -11,30 +10,30 @@ process.mixin(mongo, require('mongodb/connection'))
 var host = 'localhost'
 var port = mongo.Connection.DEFAULT_PORT
 
+
 var Geeks = function(){}
+sys.inherits(Geeks, events.EventEmitter)
+
 /**
  * Retreiving every geeks in mongo
  * @param callback Function(err, result) executed on result available.
  */
-Geeks.all = function(callback){
+Geeks.prototype.all = function(callback){
     db = new mongo.Db('GeeksNode', new mongo.Server(host, port, {}), {});
     db.open(function(err, adb) {
         if(err) {
-            debug(err, false, 1)
             db.close()
             callback(err, null)
         }
         else {
             adb.collection('test', function(err, collection) {
                 if(err) {
-                    debug(err, false, 1)
                     db.close()
                     callback(err, null)
                 }
                 else {
                     collection.find(function(err, cursor) {
                         if(err) {
-                            debug(err), false, 1
                             db.close()
                             callback(err, null)
                         }
@@ -57,7 +56,8 @@ Geeks.all = function(callback){
  * Adding geek to mongo
  * @param callback Function(err, result) executed on operation complete.
  */
-Geeks.add = function(callback, geek){
+Geeks.prototype.add = function(callback, geek){
+    var self = this
     var db = new mongo.Db('GeeksNode', new mongo.Server(host, port, {}), {});
     var wrap_callback = function(err, result){
         db.close()
@@ -80,9 +80,8 @@ Geeks.add = function(callback, geek){
                             wrap_callback(err, null)
                         }
                         else {
-                            debug(sys.inspect(Geeks, true))
                             wrap_callback(false, geek)
-                            Geeks.emit("new", geek)
+                            self.emit("new", geek)
                         }
                     })
                 }
@@ -91,7 +90,7 @@ Geeks.add = function(callback, geek){
     })
 }
 
-Geeks.purge = function(callback, err){
+Geeks.prototype.purge = function(callback, err){
     var db = new mongo.Db('GeeksNode', new mongo.Server(host, port, {}), {});
     var wrap_callback = function(err, result){
         db.close()
@@ -119,7 +118,7 @@ Geeks.purge = function(callback, err){
  * Create the mongo DB
  * @param callback Function(err, result) executed on operation complete.
  */
-Geeks.createDB = function(callback, data){
+Geeks.prototype.createDB = function(callback, data){
     var db = new mongo.Db('GeeksNode', new mongo.Server(host, port, {}), {});
     db.open(function(err, db) {
         db.dropDatabase(function(err, result){
@@ -169,6 +168,7 @@ Geeks.createDB = function(callback, data){
     });
 };
 
+
 var Geek = function(data)
 {
     this.data = data
@@ -176,13 +176,10 @@ var Geek = function(data)
 }
 
 Geek.prototype.save = function(callback) {
-    Geeks.add(callback, this)
+    singletonGeeks.add(callback, this)
 }
 
 // @todo inherits from 
-
-
-sys.inherits(Geeks, events.EventEmitter)
-
-exports.Geeks = Geeks
+var singletonGeeks = new Geeks
+exports.Geeks = singletonGeeks
 exports.Geek = Geek

@@ -3,8 +3,7 @@ var sys = require('sys')
 
 // My little node.js stuff.
 var fs      = require("fs"),
-    events  = require("events"),
-    emitter = new events.EventEmitter()
+    events  = require("events")
 
 // Express
 require.paths.unshift("vendor/express/lib");
@@ -34,7 +33,6 @@ get('/', function() {
 
   Geeks.all(function(err, result) {
         if(err) {
-            debug(err)
             self.halt(400)
         }
         self.render("index.haml.html", { locals: { geeks: result } });
@@ -51,7 +49,6 @@ get("/events", function() {
     var self = this;
     this.contentType("text");
 
-//    emitter.addListener("geek:new", function(geek){
     Geeks.addListener("new", function(geek) {
         self.halt(200, JSON.stringify(geek.data))
     })
@@ -71,7 +68,6 @@ post("/geek/create", function() {
         }
         else {
             self.halt(200, JSON.stringify(geek.data) )
-            emitter.emit("geek:new", geek)
         }
     })
 })
@@ -90,7 +86,6 @@ post('/geeks/purge', function() {
     var self = this
     new Geeks.purge(function(err, result) {
         if(err) { 
-            debug(err)
             self.halt(400)
         }
         self.halt(200, sys.inspect(result))
