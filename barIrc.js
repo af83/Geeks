@@ -31,7 +31,8 @@ get('/', function() {
  * @todo app.js config and call this url.
  */
 get('/carte', function() {
-    halt(200, JSON.stringify( { 'params' : ['server', 'chanel', 'nick'],
+    debug('carte asked')
+    this.halt(200, JSON.stringify( { 'params' : ['server', 'chanel', 'nick'],
                              'name' : 'irc',
                              'version' : 'alpha (as in GFI)'
     }))
@@ -47,6 +48,4 @@ post('/order', function() {
     // branch callback on /
 })
 
-
-
-run();
+run(3001)

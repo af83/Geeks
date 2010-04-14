@@ -21,6 +21,11 @@ configure(function() {
 
 process.mixin(GLOBAL, require("./Geeks"))
 
+process.mixin(GLOBAL, require("./Bars"))
+debug('me')
+new Bar('localhost', 3001)
+debug('me to')
+
 /**
  * Home page
  */
