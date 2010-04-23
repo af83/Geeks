@@ -1,43 +1,57 @@
-GLOBAL.DEBUG = true;
-var sys = require('sys')
+GLOBAL.DEBUG = true
+var sys     = require("sys")
+    events  = require("events")
+    kiwi    = require("kiwi")
 
-// My little node.js stuff.
-var events  = require("events")
+require.paths.unshift(__dirname + "/lib")
 
 // Express
-require.paths.unshift("vendor/express/lib");
-require("express");
-require("express/plugins");
-var utils = require('express/utils'),
-    kiwi  = require('kiwi');
-
+kiwi.require("express")
+require("express/plugins")
 
 configure(function() {
+<<<<<<< HEAD:app.js
 //  kiwi.seed('haml');
   use(MethodOverride);
   use(ContentLength);
   //use(CommonLogger);
 });
+=======
+  kiwi.seed("haml")
+  use(Logger)
+  use(MethodOverride)
+  use(ContentLength)
+  use(Cookie)
+  set('root', __dirname)
+  use(Static)
+  set("cache static files")
+})
+>>>>>>> 764c5aaab3a04bfff97f964ccb93bd548b97af56:app.js
 
-process.mixin(GLOBAL, require("./Geeks"))
+// Geeks DB
+var _Geeks = require("Geeks"),
+    Geeks  = _Geeks.Geeks,
+    Geek   = _Geeks.Geek
 
-process.mixin(GLOBAL, require("./Bars"))
+var _Bars  = require("Bars"),
+    Bars   = _Bars.Bars,
+    Bar    = _Bars.Bar
+
 new Bar('localhost', 3001)
 
 /**
  * Home page
  */
 get('/', function() {
-  var self = this;
-  this.contentType("html");
+  var self = this
+  this.contentType("html")
 
   Geeks.all(function(err, result) {
-        if(err) {
-            self.halt(400)
-        }
-        self.render("index.haml.html", { locals: { geeks: result } });
-    });
-});
+    if (err)
+      self.halt(400, "Database error")
+    self.render("index.html.haml", { locals: { geeks: result } })
+  })
+})
 
 /**
  * Long poll.
@@ -46,13 +60,13 @@ get('/', function() {
  * @todo timeout
  */
 get("/events", function() {
-    var self = this;
-    this.contentType("text");
+  var self = this
+  this.contentType("text")
 
-    Geeks.addListener("new", function(geek) {
-        self.halt(200, JSON.stringify(geek.data))
-    })
-});
+  Geeks.addListener("new", function(geek) {
+    self.halt(200, JSON.stringify(geek.data))
+  })
+})
 
 /**
  * Create a new geek.
@@ -76,8 +90,8 @@ post("/geek/create", function() {
  * Display a form to create a new geek
  */
 get("/geek/new", function(){
-  this.render("new_geek.haml.html", { layout: false })
-});
+  this.render("new_geek.html.haml", { layout: false })
+})
 
 /**
  * Want to clean Geeks list ?
@@ -89,7 +103,7 @@ post('/geeks/purge', function() {
             self.halt(400)
         }
         self.halt(200, sys.inspect(result))
-    });
+    })
 })
 
 /**
@@ -101,12 +115,12 @@ get('/geeks/createDB', function() {
         if(err)
             self.halt(400)
         self.halt(200, sys.inspect(result))
-    }, 'coco');
+    }, 'coco')
 })
 
-// Render all other static files
+/* Render all other static files
 get('/*', function(file) {
-  this.sendfile(set('root') + '/public/' + file)
-});
+  this.sendFile(set('root') + '/public/' + file)
+})*/
 
-run();
+run()
