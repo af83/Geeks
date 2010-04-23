@@ -13,18 +13,16 @@ var utils = require('express/utils'),
 
 
 configure(function() {
-  kiwi.seed('haml');
+//  kiwi.seed('haml');
   use(MethodOverride);
   use(ContentLength);
-  use(CommonLogger);
+  //use(CommonLogger);
 });
 
 process.mixin(GLOBAL, require("./Geeks"))
 
 process.mixin(GLOBAL, require("./Bars"))
-debug('me')
 new Bar('localhost', 3001)
-debug('me to')
 
 /**
  * Home page
