@@ -10,13 +10,6 @@ kiwi.require("express")
 require("express/plugins")
 
 configure(function() {
-<<<<<<< HEAD:app.js
-//  kiwi.seed('haml');
-  use(MethodOverride);
-  use(ContentLength);
-  //use(CommonLogger);
-});
-=======
   kiwi.seed("haml")
   use(Logger)
   use(MethodOverride)
@@ -26,17 +19,16 @@ configure(function() {
   use(Static)
   set("cache static files")
 })
->>>>>>> 764c5aaab3a04bfff97f964ccb93bd548b97af56:app.js
 
 // Geeks DB
 var _Geeks = require("Geeks"),
     Geeks  = _Geeks.Geeks,
     Geek   = _Geeks.Geek
 
+// Sample component
 var _Bars  = require("Bars"),
     Bars   = _Bars.Bars,
     Bar    = _Bars.Bar
-
 new Bar('localhost', 3001)
 
 /**
