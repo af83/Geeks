@@ -1,16 +1,10 @@
-GLOBAL.DEBUG = true;
-var sys = require('sys')
-
-// My little node.js stuff.
-var events  = require("events")
+var sys    = require("sys"),
+    events = require("events"),
+    kiwi   = require("kiwi")
 
 // Express
-require.paths.unshift("vendor/express/lib");
-require("express");
-require("express/plugins");
-var utils = require('express/utils'),
-    kiwi  = require('kiwi');
-
+kiwi.require("express")
+require("express/plugins")
 
 configure(function() {
   use(MethodOverride);
