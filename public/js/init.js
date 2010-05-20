@@ -1,9 +1,14 @@
 // Events channel
 (function poll() {
-    $.getJSON('/events', function(geek)
-    {
-        $('#geeks').append('<li><img src="/images/geeks/' + geek.name + '">' + geek.name + '</li>');
-        poll();
+    $.ajax({
+        url: '/events',
+        cache: false,
+        dataType: 'json',
+        success: function(geek) {
+            $('#geeks').append('<li><img src="/images/geeks/' + 
+                               geek.name + '">' + geek.name + '</li>');
+            poll();
+        }
     });
 })();
 

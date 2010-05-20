@@ -72,7 +72,7 @@ get("/events", function() {
   var self = this
   this.contentType("text")
 
-  geeks_eventor.addListener("new", function(geek) {
+  geeks_eventor.addListener("newGeek", function(geek) {
       self.halt(200, JSON.stringify(geek))
   })
 })
@@ -88,8 +88,8 @@ post("/geek/create", function() {
                            pole: this.param("pole")
     })
     geek.save(function() {
-        geeks_eventor.emit("new", geek)
-        self.halt(200, JSON.stringify(geek))
+        geeks_eventor.emit("newGeek", geek)
+        self.halt(201)
     }, function(err) {
         self.halt(400, "failed")
     })
