@@ -1,7 +1,9 @@
 GLOBAL.DEBUG = true
-var sys     = require("sys")
-    events  = require("events")
-    kiwi    = require("kiwi")
+var sys     = require("sys"),
+    events  = require("events"),
+    kiwi    = require("kiwi"),
+    rest_mongo = require("rest-mongo")
+
 
 require.paths.unshift(__dirname + "/lib")
 
@@ -20,10 +22,24 @@ configure(function() {
   set("cache static files")
 })
 
-// Geeks DB
-var _Geeks = require("Geeks"),
-    Geeks  = _Geeks.Geeks,
-    Geek   = _Geeks.Geek
+var schema = {
+  Geek: {
+    schema: {
+      id: "Geek",
+      description: "A geek / person / dev ...",
+      type: "object",
+
+      properties: {
+        name: {type: "string"},
+        pole: {type: "string"},
+      }
+    }
+  }
+}
+var RFactory = rest_mongo.getRFactory(schema, "Geeks_dev")
+
+var geeks_eventor = new events.EventEmitter()
+
 
 // Sample component
 var _Bars  = require("Bars"),
@@ -35,13 +51,14 @@ new Bar('localhost', 3001)
  * Home page
  */
 get('/', function() {
-  var self = this
+  var self = this,
+      R = RFactory()
   this.contentType("html")
 
-  Geeks.all(function(err, result) {
-    if (err)
+  R.Geek.index(function(result) {
+      self.render("index.html.haml", {locals: {geeks: result}})
+  }, function(err) {
       self.halt(400, "Database error")
-    self.render("index.html.haml", { locals: { geeks: result } })
   })
 })
 
@@ -55,8 +72,8 @@ get("/events", function() {
   var self = this
   this.contentType("text")
 
-  Geeks.addListener("new", function(geek) {
-    self.halt(200, JSON.stringify(geek.data))
+  geeks_eventor.addListener("new", function(geek) {
+      self.halt(200, JSON.stringify(geek))
   })
 })
 
@@ -64,17 +81,17 @@ get("/events", function() {
  * Create a new geek.
  */
 post("/geek/create", function() {
-    var self = this
-    var geek = new Geek({name: this.param("name"),
-                        pole: this.param("pole")
+    var self = this,
+        R = RFactory()
+
+    var geek = new R.Geek({name: this.param("name"),
+                           pole: this.param("pole")
     })
-    geek.save(function(err, geek){
-        if(err) {
-            self.halt(400, "failed")
-        }
-        else {
-            self.halt(200, JSON.stringify(geek.data) )
-        }
+    geek.save(function() {
+        geeks_eventor.emit("new", geek)
+        self.halt(200, JSON.stringify(geek))
+    }, function(err) {
+        self.halt(400, "failed")
     })
 })
 
@@ -89,30 +106,14 @@ get("/geek/new", function(){
  * Want to clean Geeks list ?
  */
 post('/geeks/purge', function() {
-    var self = this
-    new Geeks.purge(function(err, result) {
-        if(err) { 
-            self.halt(400)
-        }
-        self.halt(200, sys.inspect(result))
+    var self = this,
+        R = RFactory()
+    R.Geek.clear_all(function() {
+        self.halt(200, "Geeks deleted")
+    }, function(err) {
+        self.halt(400)
     })
 })
 
-/**
- * Initializing mongoDB
- */
-get('/geeks/createDB', function() {
-    var self = this
-    Geeks.createDB(function(err, result) {
-        if(err)
-            self.halt(400)
-        self.halt(200, sys.inspect(result))
-    }, 'coco')
-})
-
-/* Render all other static files
-get('/*', function(file) {
-  this.sendFile(set('root') + '/public/' + file)
-})*/
-
 run()
+
