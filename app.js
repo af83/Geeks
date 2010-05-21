@@ -1,6 +1,7 @@
 GLOBAL.DEBUG = true
 
 require.paths.unshift("./vendor/Socket.IO-node/lib")
+require.paths.unshift("./vendor/rest-mongo/src")
 
 var sys     = require("sys"),
     kiwi    = require("kiwi"),
