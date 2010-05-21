@@ -1,8 +1,11 @@
 GLOBAL.DEBUG = true
+
+require.paths.unshift("./vendor/Socket.IO-node/lib")
+
 var sys     = require("sys"),
-    events  = require("events"),
     kiwi    = require("kiwi"),
-    rest_mongo = require("rest-mongo")
+    rest_mongo = require("rest-mongo"),
+    io = require('socket.io')
 
 
 require.paths.unshift(__dirname + "/lib")
@@ -38,8 +41,6 @@ var schema = {
 }
 var RFactory = rest_mongo.getRFactory(schema, "Geeks_dev")
 
-var geeks_eventor = new events.EventEmitter()
-
 
 // Sample component
 var _Bars  = require("Bars"),
@@ -63,21 +64,6 @@ get('/', function() {
 })
 
 /**
- * Long poll.
- * Watching for geeks update.
- * Submiting the freshly created geek.
- * @todo timeout
- */
-get("/events", function() {
-  var self = this
-  this.contentType("text")
-
-  geeks_eventor.addListener("newGeek", function(geek) {
-      self.halt(200, JSON.stringify(geek))
-  })
-})
-
-/**
  * Create a new geek.
  */
 post("/geek/create", function() {
@@ -88,7 +74,7 @@ post("/geek/create", function() {
                            pole: this.param("pole")
     })
     geek.save(function() {
-        geeks_eventor.emit("newGeek", geek)
+        websocket_listener.broadcast({event: "NewGeek", data: geek})
         self.halt(201)
     }, function(err) {
         self.halt(400, "failed")
@@ -115,5 +101,9 @@ post('/geeks/purge', function() {
     })
 })
 
-run()
+var server = run()
+var websocket_listener = io.listen(server, {
+    resource: "socket.io", 
+    transports: ['websocket'],
+})
 
