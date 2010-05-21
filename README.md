@@ -19,10 +19,9 @@ Git Repository
 
   $ git clone af83@git.af83.com:geeks.git
 
-Geeks depends on a pure JS mongodb driver, which is vendorized through a git
-submodule:
+Geeks depends on a rest-mongo and Socket.IO-node, which are vendorized through a git submodules:
 
-  $ git submodule update --init
+  $ git submodule update --init --recursive
 
 
 Express framework

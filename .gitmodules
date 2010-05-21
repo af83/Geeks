@@ -1,6 +1,6 @@
-[submodule "vendor/mongodb"]
-	path = vendor/mongodb
-	url = git://github.com/christkv/node-mongodb-native.git
 [submodule "vendor/Socket.IO-node"]
 	path = vendor/Socket.IO-node
-	url = http://github.com/LearnBoost/Socket.IO-node.git
+	url = git://github.com/virtuo/Socket.IO-node.git
+[submodule "vendor/rest-mongo"]
+	path = vendor/rest-mongo
+	url = git://github.com/AF83/rest-mongo.git
