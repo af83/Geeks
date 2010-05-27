@@ -45,11 +45,12 @@ scene = function(){
       *
       * Arguments:
       *   - placement: JSON representation of the placement.
-      *   The placement contains the following info:
-      *     - top: expressed in %
-      *     - left: expressed in %
-      *     - width: expressed in px
-      *     - height: expressed in px
+      *   
+      *   The placement contains the following placement info:
+      *     top, left, width, height
+      *   There are all exprimed in '%' unless string 
+      *   (you should then specify '%' or 'px')
+      *   
       */
      var html = '<div class="obj"><img src="' + placement.src +
                 '" title="' + placement.title + '"/></div>';
@@ -57,28 +58,34 @@ scene = function(){
                    .children(":last"); // the element we have just inserted
      if(placement.movable) element.addClass("drag");
      if(placement.resizable) element.append('<div class="resize"></div>');
-     element.css({
-       width: placement.width + '%',
-       height: placement.height + '%',
-       left: placement.left + '%' || 0,
-       top: placement.top + '%' || 0,
-       z: placement.z || 2
+     ['width', 'height', 'left', 'top'].forEach(function(attr) {
+       if(typeof placement[attr] != 'string') {
+         //console.log('%% the attr '+ attr + ' of ', placement);
+         placement[attr] += '%';
+       }
      });
+     element.css({
+       width: placement.width,
+       height: placement.height,
+       left: placement.left,
+       top: placement.top,
+       z: placement.z
+     })
+     .px2percent(ref_width, ref_height)
 
-     element.px2percent(ref_width, ref_height)
-            .filter(".drag")
-            .jqdrag(function() {
-              element.px2percent(width, height, zoom_level);
-              placement.top = parseFloat(element.css("top"));
-              placement.left = parseFloat(element.css("left"));
-              placement.update_callback && placement.update_callback(placement);
-            })
-            .jqresize('.resize', function() {
-              element.px2percent(width, height, zoom_level);
-              placement.width = parseFloat(element.css("width"));
-              placement.height = parseFloat(element.css("height"));
-              placement.update_callback && placement.update_callback(placement);
-            });
+     .filter(".drag")
+     .jqdrag(function() {
+       element.px2percent(width, height, zoom_level);
+       placement.top = parseFloat(element.css("top"));
+       placement.left = parseFloat(element.css("left"));
+       placement.update_callback && placement.update_callback(placement);
+     })
+     .jqresize('.resize', function() {
+       element.px2percent(width, height, zoom_level);
+       placement.width = parseFloat(element.css("width"));
+       placement.height = parseFloat(element.css("height"));
+       placement.update_callback && placement.update_callback(placement);
+     });
    },
 
    zoom = function(delta, event) {

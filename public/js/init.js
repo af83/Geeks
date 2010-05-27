@@ -1,13 +1,5 @@
-// Events channel
-(function(){
-    events_dispatcher.bind('NewGeek', function(geek) {
-        $('#geeks').append('<li><img src="/images/geeks/' +
-                           geek.name + '">' + geek.name + '</li>');
-    });
-})();
-
-// Every link with a classname 'as_dialog' will open as dialog on click.
 $(document).ready(function() {
+    // Every link with a classname 'as_dialog' will open as dialog on click.
     $('a.as_dialog').live('click', function(event) {
         event.preventDefault();
         ( new GeeksDialog($(this).attr('href')) ).show();
@@ -33,24 +25,28 @@ $(document).ready(function() {
     }, $("#map"));
 
     var defaults = {
-      width: 20,
-      height: 20,
+      width: "30px",
+      height: "30px",
       movable: true,
       resizable: true,
       src: '/public/images/smiley.png',
+      z: 2,
       top: 0,
       left: 0,
       update_callback: function(geek) {
         var data = JSON.stringify(geek);
         $.post('/geeks/'+geek.id, data);
       }
+    },
+    add_geek = function(geek) {
+      geeks_map.add_obj($.extend({
+        title: geek.name
+      }, defaults, geek));
     };
+
     $.getJSON('/geeks.json', function(geeks) {
-      geeks.forEach(function(geek) {
-        geeks_map.add_obj($.extend({
-          title: geek.name
-        }, defaults, geek));
-      });
+      geeks.forEach(add_geek);
     });
+    events_dispatcher.bind('NewGeek', add_geek);
 
 });
