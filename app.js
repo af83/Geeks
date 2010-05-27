@@ -107,6 +107,10 @@ post('/geeks/:id', function(id) {
     ids: id,
     data: geek
   }, function() {
+    var data = utils.extend({
+        id: id
+      }, geek)
+    websocket_listener.broadcast({event: "UpdateGeek", data: data})
     self.halt(200)
   }, function() {
     self.halt(501)

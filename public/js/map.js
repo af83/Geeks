@@ -39,6 +39,7 @@ scene = function(){
        zoom_level = 100.,
        zoom_max = 500,
        zoom_min = 30,
+       ids2elements = {}, // Associate an object id with a jquery element
 
    add_object = this.add_object = function(obj, defaults) {
      /* Add the given object to the the scene_element
@@ -62,23 +63,12 @@ scene = function(){
                 '" title="' + ext_obj.title + '"/></div>';
      var element = wrapper2.append(html)
                    .children(":last"); // the element we have just inserted
+     ids2elements[obj.id] = element;
      if(ext_obj.movable) element.addClass("drag");
      if(ext_obj.resizable) element.append('<div class="resize"></div>');
-     ['width', 'height', 'left', 'top'].forEach(function(attr) {
-       if(typeof ext_obj[attr] != 'string') {
-         ext_obj[attr] += '%';
-       }
-     });
-     element.css({
-       width: ext_obj.width,
-       height: ext_obj.height,
-       left: ext_obj.left,
-       top: ext_obj.top,
-       z: ext_obj.z
-     })
-     .px2percent(ref_width, ref_height)
+     update_object(obj.id, ext_obj);
 
-     .filter(".drag")
+     element.filter(".drag")
      .jqdrag(function() {
        element.px2percent(width, height, zoom_level);
        obj.top = parseFloat(element.css("top"));
@@ -91,6 +81,25 @@ scene = function(){
        obj.height = parseFloat(element.css("height"));
        ext_obj.update_callback && ext_obj.update_callback(obj);
      });
+   },
+
+   update_object = this.update_object = function(obj_id, obj) {
+     /* Update the position of the object.
+      * obj must contain the following properties: width, height, top, left, z.
+      */
+     ['width', 'height', 'left', 'top'].forEach(function(attr) {
+       if(typeof obj[attr] != 'string') {
+         obj[attr] += '%';
+       }
+     });
+     ids2elements[obj_id].css({
+       width: obj.width,
+       height: obj.height,
+       left: obj.left,
+       top: obj.top,
+       z: obj.z
+     })
+     .px2percent(ref_width, ref_height);
    },
 
    zoom = function(delta, event) {

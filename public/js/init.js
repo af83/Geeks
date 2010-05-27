@@ -12,6 +12,7 @@ $(document).ready(function() {
         height: 714,
         objects: [
           {src: "/public/images/plan_af1.png",
+           id: 0,
            width: 100,
            height: 100,
            movable: false,
@@ -49,5 +50,8 @@ $(document).ready(function() {
       geeks.forEach(add_geek);
     });
     events_dispatcher.bind('NewGeek', add_geek);
+    events_dispatcher.bind('UpdateGeek', function(geek) {
+      geeks_map.update_object(geek.id, geek);
+    });
 
 });
