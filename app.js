@@ -6,7 +6,8 @@ require.paths.unshift("./vendor/rest-mongo/src")
 var sys     = require("sys"),
     kiwi    = require("kiwi"),
     rest_mongo = require("rest-mongo"),
-    io = require('socket.io')
+    io = require('socket.io'),
+    utils = require("nodetk/utils")
 
 
 require.paths.unshift(__dirname + "/lib")
@@ -36,6 +37,10 @@ var schema = {
       properties: {
         name: {type: "string"},
         pole: {type: "string"},
+        width: {type: "float"},
+        height: {type: "float"},
+        top: {type: "float"},
+        left: {type: "float"}
       }
     }
   }
@@ -55,7 +60,7 @@ new Bar('localhost', 3001)
 get('/', function() {
   var self = this,
       R = RFactory()
-  this.contentType("html")
+  self.contentType("html")
 
   R.Geek.index(function(result) {
       self.render("index.html.haml", {locals: {geeks: result}})
@@ -63,6 +68,50 @@ get('/', function() {
       self.halt(400, "Database error")
   })
 })
+
+
+get('/geeks.json', function() {
+  var self = this,
+      R = RFactory()
+  self.contentType("json")
+  
+  R.Geek.index(function(geeks) {
+    // TODO: make something cleaner here (make a json method in rest-mongo ?)
+    geeks = geeks.map(function(geek) {
+      return utils.extend({
+        id: geek.id()
+      }, geek.unlink())
+    })
+    self.halt(200, JSON.stringify(geeks))
+  }, function(error) {
+    self.halt(501)
+  });
+});
+
+post('/geeks/:id', function(id) {
+  var R = RFactory(),
+      self = this,
+      geek
+
+  try {
+    geek = JSON.parse(self.body)
+    // TODO: cleaner filtering
+    delete geek.id
+    delete geek.movable
+    delete geek.resizable
+  } catch (e) {
+    return self.halt(400)
+  }
+
+  R.Geek.update({
+    ids: id,
+    data: geek
+  }, function() {
+    self.halt(200)
+  }, function() {
+    self.halt(501)
+  });
+});
 
 /**
  * Create a new geek.
@@ -88,6 +137,13 @@ post("/geek/create", function() {
 get("/geek/new", function(){
   this.render("new_geek.html.haml", { layout: false })
 })
+
+/* Serve JS client files from git submodules in /vendor/js_client/ dir.
+ */
+get('/public/js2/:name.js', function(name) {
+  this.sendfile(__dirname + '/vendor/js_client/' + name + '/' + name + '.js')
+})
+
 
 /**
  * Want to clean Geeks list ?

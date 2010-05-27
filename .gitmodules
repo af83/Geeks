@@ -4,3 +4,12 @@
 [submodule "vendor/rest-mongo"]
 	path = vendor/rest-mongo
 	url = git://github.com/AF83/rest-mongo.git
+[submodule "vendor/js_client/jquery.drag_resize"]
+	path = vendor/js_client/jquery.drag_resize
+	url = git://github.com/virtuo/jquery.drag_resize.git
+[submodule "vendor/js_client/jquery.px2percent"]
+	path = vendor/js_client/jquery.px2percent
+	url = git://github.com/virtuo/jquery.px2percent.git
+[submodule "vendor/js_client/jquery.mousewheel"]
+	path = vendor/js_client/jquery.mousewheel
+	url = git://github.com/brandonaaron/jquery-mousewheel.git

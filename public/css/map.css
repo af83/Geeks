@@ -1,0 +1,35 @@
+#map {
+ border:1px solid black;
+ /* Unactivate to let the user bring back objects inside room ? */
+ overflow: hidden;
+ position: relative;
+}
+
+div.obj img {
+  width: 100%;
+  height: 100%;
+}
+
+div.obj {
+  position: absolute;
+  z-index: 3;
+}
+
+div.drag {
+  cursor: move;
+}
+
+div.drag:hover {
+  border: 1px solid #1ef656;
+}
+
+div.obj:hover .resize {
+ width: 5px;
+ position: absolute;
+ bottom: 0;
+ right: 0;
+ cursor: se-resize;
+ background: red;
+ height:5px;
+}
+
