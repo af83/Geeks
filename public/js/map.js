@@ -23,7 +23,7 @@ scene = function(){
     *   - scene_element: JQuery html element
     * */
 
-   if(!self.placements) self.placements = [];
+   if(!self.objects) self.objects = [];
    scene_element.html('<div class="wrapper1"><div class="wrapper2"></div></div>');
    scene_element.find('div').css({
      position: 'relative',
@@ -40,51 +40,56 @@ scene = function(){
        zoom_max = 500,
        zoom_min = 30,
 
-   add_placement = function(placement) {
-     /* Add the given placement to the the scene_element
+   add_object = this.add_object = function(obj, defaults) {
+     /* Add the given object to the the scene_element
       *
       * Arguments:
-      *   - placement: JSON representation of the placement.
+      *   - obj: JSON representation of the object to place in the scene.
+      *   - defaults: to be used in case obj doesn't define a wanted property.
       *   
-      *   The placement contains the following placement info:
+      *   The obj contains the following placement info:
       *     top, left, width, height
       *   There are all exprimed in '%' unless string 
       *   (you should then specify '%' or 'px')
       *   
       */
-     var html = '<div class="obj"><img src="' + placement.src +
-                '" title="' + placement.title + '"/></div>';
+     defaults = defaults || {};
+     var ext_obj = $.extend({}, defaults, obj);
+     if($.isFunction(ext_obj.title)) {
+       ext_obj.title = ext_obj.title(obj);
+     }
+     var html = '<div class="obj"><img src="' + ext_obj.src +
+                '" title="' + ext_obj.title + '"/></div>';
      var element = wrapper2.append(html)
                    .children(":last"); // the element we have just inserted
-     if(placement.movable) element.addClass("drag");
-     if(placement.resizable) element.append('<div class="resize"></div>');
+     if(ext_obj.movable) element.addClass("drag");
+     if(ext_obj.resizable) element.append('<div class="resize"></div>');
      ['width', 'height', 'left', 'top'].forEach(function(attr) {
-       if(typeof placement[attr] != 'string') {
-         //console.log('%% the attr '+ attr + ' of ', placement);
-         placement[attr] += '%';
+       if(typeof ext_obj[attr] != 'string') {
+         ext_obj[attr] += '%';
        }
      });
      element.css({
-       width: placement.width,
-       height: placement.height,
-       left: placement.left,
-       top: placement.top,
-       z: placement.z
+       width: ext_obj.width,
+       height: ext_obj.height,
+       left: ext_obj.left,
+       top: ext_obj.top,
+       z: ext_obj.z
      })
      .px2percent(ref_width, ref_height)
 
      .filter(".drag")
      .jqdrag(function() {
        element.px2percent(width, height, zoom_level);
-       placement.top = parseFloat(element.css("top"));
-       placement.left = parseFloat(element.css("left"));
-       placement.update_callback && placement.update_callback(placement);
+       obj.top = parseFloat(element.css("top"));
+       obj.left = parseFloat(element.css("left"));
+       ext_obj.update_callback && ext_obj.update_callback(obj);
      })
      .jqresize('.resize', function() {
        element.px2percent(width, height, zoom_level);
-       placement.width = parseFloat(element.css("width"));
-       placement.height = parseFloat(element.css("height"));
-       placement.update_callback && placement.update_callback(placement);
+       obj.width = parseFloat(element.css("width"));
+       obj.height = parseFloat(element.css("height"));
+       ext_obj.update_callback && ext_obj.update_callback(obj);
      });
    },
 
@@ -109,24 +114,10 @@ scene = function(){
      });
    };
 
-   $.each(self.placements, function(i, placement) {
-    add_placement(placement);
+   $.each(self.objects, function(i, obj) {
+    add_object(obj);
    });
     
-
-   this.add_obj = function(obj) {
-    /* Add the given obj to the scene
-     * */
-    //var placement = {obj: obj, z:2};
-    //if(!obj.model.top) {
-    //  $.extend(placement, {top: 0, left:0});
-    //}
-    var placement = obj;
-    self.placements.push(placement);
-    add_placement(placement);
-   };
-
-
    scene_element.css("max-width", ref_width + "px");
    var resize = function(){
      // To let the width be calculated by the browser:
