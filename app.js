@@ -77,11 +77,7 @@ get('/geeks.json', function() {
   
   R.Geek.index(function(geeks) {
     // TODO: make something cleaner here (make a json method in rest-mongo ?)
-    geeks = geeks.map(function(geek) {
-      return utils.extend({
-        id: geek.id()
-      }, geek.unlink())
-    })
+    geeks = geeks.map(function(geek) {return geek.json()});
     self.halt(200, JSON.stringify(geeks))
   }, function(error) {
     self.halt(501)
@@ -107,9 +103,7 @@ post('/geeks/:id', function(id) {
     ids: id,
     data: geek
   }, function() {
-    var data = utils.extend({
-        id: id
-      }, geek)
+    var data = utils.extend({id: id}, geek)
     websocket_listener.broadcast({event: "UpdateGeek", data: data})
     self.halt(200)
   }, function() {
