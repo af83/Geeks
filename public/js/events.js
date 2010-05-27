@@ -7,8 +7,9 @@
 events_dispatcher = (function() {
 
   if (!('WebSocket' in window)) {
-    //alert("Your browser does not support WebSockets! " +
-    //      "You won't have any live events!");
+    $('body').prepend('<p style="background:red">' +
+                      'Your browser does not support WebSockets! ' +
+                      'You won\'t have any live events!</p>');
     return {bind: function(){}};
   }
   var mapper = {};
