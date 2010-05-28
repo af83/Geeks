@@ -19,7 +19,7 @@ Git Repository
 
   $ git clone af83@git.af83.com:geeks.git
 
-Geeks depends on a rest-mongo and Socket.IO-node, which are vendorized through a git submodules:
+Geeks depends on a rest-mongo and Socket.IO-node and others, which are vendorized through a git submodules:
 
   $ git submodule update --init --recursive
 
@@ -37,7 +37,7 @@ management tool.
 kiwi is installed. Geeks has two dependencies based on visionmedia's work, that
 need to be installed with kiwi: Express, and HAML. Install them with:
 
-  $ kiwi install express
+  $ kiwi install express 0.12.0
   $ kiwi install haml
 
 

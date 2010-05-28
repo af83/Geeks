@@ -65,7 +65,7 @@ get('/', function() {
   R.Geek.index(function(result) {
       self.render("index.html.haml", {locals: {geeks: result}})
   }, function(err) {
-      self.halt(400, "Database error")
+      self.respond(400, "Database error")
   })
 })
 
@@ -77,9 +77,9 @@ get('/geeks.json', function() {
   
   R.Geek.index(function(geeks) {
     geeks = geeks.map(function(geek) {return geek.json()});
-    self.halt(200, JSON.stringify(geeks))
+    self.respond(200, JSON.stringify(geeks))
   }, function(error) {
-    self.halt(501)
+    self.respond(501)
   });
 });
 
@@ -95,7 +95,7 @@ post('/geeks/:id', function(id) {
     delete geek.movable
     delete geek.resizable
   } catch (e) {
-    return self.halt(400)
+    return self.respond(400)
   }
 
   R.Geek.update({
@@ -104,9 +104,9 @@ post('/geeks/:id', function(id) {
   }, function() {
     var data = utils.extend({id: id}, geek)
     websocket_listener.broadcast({event: "UpdateGeek", data: data})
-    self.halt(200)
+    self.respond(200)
   }, function() {
-    self.halt(501)
+    self.respond(501)
   });
 });
 
@@ -114,7 +114,7 @@ post('/events', function() {
   event = JSON.parse(this.body)
   sys.puts('event: ' + JSON.stringify(event))
   websocket_listener.broadcast(event)
-  this.halt(200)
+  this.respond(200)
 });
 
 /**
@@ -129,9 +129,9 @@ post("/geek/create", function() {
     })
     geek.save(function() {
         websocket_listener.broadcast({event: "NewGeek", data: geek})
-        self.halt(201)
+        self.respond(201)
     }, function(err) {
-        self.halt(400, "failed")
+        self.respond(400, "failed")
     })
 })
 
@@ -156,9 +156,9 @@ post('/geeks/purge', function() {
     var self = this,
         R = RFactory()
     R.Geek.clear_all(function() {
-        self.halt(200, "Geeks deleted")
+        self.respond(200, "Geeks deleted")
     }, function(err) {
-        self.halt(400)
+        self.respond(400)
     })
 })
 
