@@ -4,6 +4,7 @@
   %head
     %title Geeks
     %link{type: "text/css", rel: "stylesheet", href: "/public/css/map.css"}
+    %link{type: "text/css", rel: "stylesheet", href: "/public/css/irc_url.css"}
     /%link{ type: "text/css", rel: "stylesheet", href: "/public/js/development-bundle/themes/base/ui.all.css" }
     /%link{ type: "text/css", rel: "stylesheet", href: "/public/js/development-bundle/themes/sunny/ui.all.css" }
     /%link{ type: "text/css", rel: "stylesheet", href: "/public/css/sunny/jquery-ui-1.7.2.custom.css" }
@@ -11,6 +12,9 @@
     %ul
       %li
         %a.tool.as_dialog{ href:"/geek/new" } new geek
+    #irc_urls
+      URLs posted on IRC:
+      %ul
     != body
     #events
     %p footer.

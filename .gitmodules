@@ -13,3 +13,9 @@
 [submodule "vendor/js_client/jquery.mousewheel"]
 	path = vendor/js_client/jquery.mousewheel
 	url = git://github.com/brandonaaron/jquery-mousewheel.git
+[submodule "vendor/node-irc"]
+	path = vendor/node-irc
+	url = git://github.com/martynsmith/node-irc.git
+[submodule "vendor/nodetk"]
+	path = vendor/nodetk
+	url = git://github.com/AF83/nodetk.git

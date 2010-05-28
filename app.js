@@ -1,7 +1,7 @@
 GLOBAL.DEBUG = true
 
-require.paths.unshift("./vendor/Socket.IO-node/lib")
-require.paths.unshift("./vendor/rest-mongo/src")
+require.paths.unshift(__dirname + "/vendor/Socket.IO-node/lib")
+require.paths.unshift(__dirname + "/vendor/rest-mongo/src")
 
 var sys     = require("sys"),
     kiwi    = require("kiwi"),
@@ -108,6 +108,13 @@ post('/geeks/:id', function(id) {
   }, function() {
     self.halt(501)
   });
+});
+
+post('/events', function() {
+  event = JSON.parse(this.body)
+  sys.puts('event: ' + JSON.stringify(event))
+  websocket_listener.broadcast(event)
+  this.halt(200)
 });
 
 /**
