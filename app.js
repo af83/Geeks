@@ -76,7 +76,6 @@ get('/geeks.json', function() {
   self.contentType("json")
   
   R.Geek.index(function(geeks) {
-    // TODO: make something cleaner here (make a json method in rest-mongo ?)
     geeks = geeks.map(function(geek) {return geek.json()});
     self.halt(200, JSON.stringify(geeks))
   }, function(error) {
