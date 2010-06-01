@@ -2,13 +2,17 @@ GLOBAL.DEBUG = true
 
 require.paths.unshift(__dirname + "/vendor/Socket.IO-node/lib")
 require.paths.unshift(__dirname + "/vendor/rest-mongo/src")
+require.paths.unshift(__dirname + "/vendor/nodetk/src")
+
 
 var sys     = require("sys"),
     kiwi    = require("kiwi"),
-    rest_mongo = require("rest-mongo"),
     io = require('socket.io'),
-    utils = require("nodetk/utils")
+    utils = require("nodetk/utils"),
+    debug = require("nodetk/logging").debug,
+    RFactory = require("./db").RFactory
 
+debug.on()
 
 require.paths.unshift(__dirname + "/lib")
 
@@ -26,26 +30,6 @@ configure(function() {
   use(Static)
   set("cache static files")
 })
-
-var schema = {
-  Geek: {
-    schema: {
-      id: "Geek",
-      description: "A geek / person / dev ...",
-      type: "object",
-
-      properties: {
-        name: {type: "string"},
-        pole: {type: "string"},
-        width: {type: "float"},
-        height: {type: "float"},
-        top: {type: "float"},
-        left: {type: "float"}
-      }
-    }
-  }
-}
-var RFactory = rest_mongo.getRFactory(schema, "Geeks_dev")
 
 
 // Sample component
@@ -74,14 +58,29 @@ get('/geeks.json', function() {
   var self = this,
       R = RFactory()
   self.contentType("json")
-  
+ 
   R.Geek.index(function(geeks) {
-    geeks = geeks.map(function(geek) {return geek.json()});
+    geeks = geeks.map(function(geek) {return geek.json()})
     self.respond(200, JSON.stringify(geeks))
   }, function(error) {
     self.respond(501)
-  });
-});
+  })
+})
+
+
+get('/urls.json', function() {
+  var self = this,
+      R = RFactory()
+  self.contentType("json")
+
+  R.URL.index(function(urls) {
+    urls = urls.map(function(url) {return url.json()});
+    self.respond(200, JSON.stringify(urls))
+  }, function(error) {
+    self.respond(501)
+  })
+})
+
 
 post('/geeks/:id', function(id) {
   var R = RFactory(),

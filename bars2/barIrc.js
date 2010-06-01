@@ -5,7 +5,9 @@ var sys = require("sys"),
     irc = require("irc"),
     bar = require('./bar'),
     search = require('nodetk/text/search'),
-    web = require('nodetk/web')
+    web = require('nodetk/web'),
+    RFactory = require("../db").RFactory
+
 
 sys.puts(require.paths)
 
@@ -20,6 +22,13 @@ bot.addListener('error', function(message) {
 
 
 bot.addListener('message', function(from, to, message) {
+  var R = RFactory()
+  var irc_url = function(from, channel, url) {
+    var data = {from: from, channel: channel, url: url}
+    bar.emit_event('IrcURL', data)
+    var url = new R.URL(data)
+    url.save()
+  }
   sys.puts('Received message from ' + from + " : " + message)
   if (to.match(/^[#&]/)) { // channel message
     var urls = search.extract_URLs(message)
@@ -27,12 +36,11 @@ bot.addListener('message', function(from, to, message) {
       sys.puts('URL: ' + url)
       var data = {from: from, channel: to, url: url}
       if(url.indexOf('http') == 0) web.check_url(url, {}, function(info) {
-        data.url = info.location
-        bar.emit_event('IrcURL', data)
+        irc_url(from, to, info.location)
       }, function(err) {
         sys.puts("error:" + err);
       })
-      else bar.emit_event('IrcURL', data)
+      else irc_url(from, to, url)
     })
   }
 });

@@ -54,12 +54,16 @@ $(document).ready(function() {
       geeks_map.update_object(geek.id, geek);
     });
 
-    var irc_url = $('#irc_urls');
-    events_dispatcher.bind('IrcURL', function(event) {
-      irc_url.find('ul').append('<li><span></span><a href="' + event.url +
-                                '">'+ event.url +'</a></li>');
-      irc_url.find('ul li:last span').text(event.channel + ' (' + event.from + '): ');
+    var irc_url = $('#irc_urls'),
+    add_url = function(url) {
+      irc_url.find('ul').append('<li><span></span><a href="' + url.url +
+                                '">'+ url.url +'</a></li>');
+      irc_url.find('ul li:last span').text(url.channel + ' (' + url.from + '): ');
       irc_url.scrollTop(irc_url[0].scrollHeight);
+    };
+    events_dispatcher.bind('IrcURL', add_url);
+    $.getJSON('/urls.json', function(urls) {
+      urls.forEach(add_url);
     });
 
 });

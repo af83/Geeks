@@ -1,0 +1,39 @@
+var rest_mongo = require("rest-mongo")
+
+
+var schema = {
+  Geek: {
+    schema: {
+      id: "Geek",
+      description: "A geek / person / dev ...",
+      type: "object",
+
+      properties: {
+        name: {type: "string"},
+        pole: {type: "string"},
+        width: {type: "float"},
+        height: {type: "float"},
+        top: {type: "float"},
+        left: {type: "float"}
+      }
+    }
+  },
+
+  URL: {
+    schema: {
+      id: "URL",
+      description: "URL, potentially interesting for geeks",
+      type: "object",
+
+      properties: {
+        url: {type: "string"}, // the URL value
+        from: {type: "string"}, // who posted the url (nick, name...)
+        channel: {type: "string"} // where it has been posted (irc chan...)
+      }
+    }
+  }
+
+}
+
+exports.RFactory = rest_mongo.getRFactory(schema, "Geeks_dev")
+
