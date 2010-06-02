@@ -1,7 +1,6 @@
 GLOBAL.DEBUG = true
 
 require.paths.unshift(__dirname + "/vendor/Socket.IO-node/lib")
-require.paths.unshift(__dirname + "/vendor/rest-mongo/src")
 require.paths.unshift(__dirname + "/vendor/nodetk/src")
 
 

@@ -1,3 +1,5 @@
+require.paths.unshift(__dirname + "/vendor/rest-mongo/src")
+
 var rest_mongo = require("rest-mongo")
 
 
@@ -35,5 +37,5 @@ var schema = {
 
 }
 
-exports.RFactory = rest_mongo.getRFactory(schema, "Geeks_dev")
+exports.RFactory = rest_mongo.getRFactory(schema, {db_name: "Geeks_dev"})
 
