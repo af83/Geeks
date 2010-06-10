@@ -12,10 +12,7 @@ $.sammy(function() {
   });
 
   this.post('#/geeks', function(env) {
-    console.log(env);
-    if (env.params.submit == "Save") {
-      $.post('/geeks', env.params);
-    }
+    $.post('/geeks', env.params);
     this.redirect('#/');
     return false;
   });
