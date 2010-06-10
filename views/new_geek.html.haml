@@ -1,4 +1,13 @@
-%form{ method:"post", action:"/geek/create" }
-  %input{ type:"text", name:"name" }
-  %input{ type:"text", name:"pole" }
-  %input{ type:"submit", value:"one more" }
+%form{ method:"post", action:"#/geeks" }
+  %label{}
+    Name:
+    %input{ type:"text", name:"name" }
+  %label{}
+    Nickname:
+    %input{ type:"text", name:"nickname"}
+  %label{}
+    Pole:
+    %input{ type:"text", name:"pole" }
+  %input{ type:"submit", name:"submit", value:"Cancel" }
+  %input{ type:"submit", name:"submit", value:"Save" }
+

@@ -1,10 +1,4 @@
 $(document).ready(function() {
-    // Every link with a classname 'as_dialog' will open as dialog on click.
-    $('a.as_dialog').live('click', function(event) {
-        event.preventDefault();
-        ( new GeeksDialog($(this).attr('href')) ).show();
-    });
-
 
     var geeks_map = new scene({
         // Must keep the background ratio:
@@ -65,6 +59,9 @@ $(document).ready(function() {
     $.getJSON('/urls.json', function(urls) {
       urls.forEach(add_url);
     });
+
+    var app = $.sammy();
+    app.run();
 
 });
 

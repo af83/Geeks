@@ -13,6 +13,7 @@ var schema = {
       properties: {
         id: {type: "string"},
         name: {type: "string"},
+        nickname: {type: "string"},
         pole: {type: "string"},
         width: {type: "float"},
         height: {type: "float"},

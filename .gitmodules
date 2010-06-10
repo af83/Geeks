@@ -19,3 +19,6 @@
 [submodule "vendor/nodetk"]
 	path = vendor/nodetk
 	url = git://github.com/AF83/nodetk.git
+[submodule "vendor/js_client/sammy"]
+	path = vendor/js_client/sammy
+	url = git://github.com/quirkey/sammy.git

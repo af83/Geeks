@@ -118,11 +118,12 @@ post('/events', function() {
 /**
  * Create a new geek.
  */
-post("/geek/create", function() {
+post("/geeks", function() {
     var self = this,
         R = RFactory()
 
     var geek = new R.Geek({name: this.param("name"),
+                           nickname: this.param("nickname"),
                            pole: this.param("pole")
     })
     geek.save(function() {
@@ -136,14 +137,23 @@ post("/geek/create", function() {
 /**
  * Display a form to create a new geek
  */
-get("/geek/new", function(){
+get("/geeks/new", function(){
   this.render("new_geek.html.haml", { layout: false })
 })
 
 /* Serve JS client files from git submodules in /vendor/js_client/ dir.
  */
+var jslibs = {
+  'jquery.drag_resize': 'jquery.drag_resize/jquery.drag_resize.js',
+  'jquery.mousewheel': 'jquery.mousewheel/jquery.mousewheel.js',
+  'jquery.px2percent': 'jquery.px2percent/jquery.px2percent.js',
+  'sammy': 'sammy/lib/sammy.js'
+}
 get('/public/js2/:name.js', function(name) {
-  this.sendfile(__dirname + '/vendor/js_client/' + name + '/' + name + '.js')
+  var path = jslibs[name]
+  if(name) {
+    this.sendfile(__dirname + '/vendor/js_client/' + path)
+  }
 })
 
 
