@@ -29,7 +29,7 @@ $(document).ready(function() {
       top: 0,
       left: 0,
       title: function(geek) {
-        return geek.name;
+        return geek.name + " aka " + geek.nickname;
       },
       update_callback: function(geek) {
         var data = JSON.stringify(geek);
@@ -45,7 +45,8 @@ $(document).ready(function() {
     });
     events_dispatcher.bind('NewGeek', add_geek);
     events_dispatcher.bind('UpdateGeek', function(geek) {
-      geeks_map.update_object(geek.id, geek);
+      geeks_map.remove_object(geek.id);
+      geeks_map.add_object(geek, defaults);
     });
 
     var irc_url = $('#irc_urls'),
@@ -60,8 +61,22 @@ $(document).ready(function() {
       urls.forEach(add_url);
     });
 
-    var app = $.sammy();
+    var app = $.sammy(function() {
+    });
     app.run();
+
+   $('#map .obj').live('dblclick', function(event) {
+     var geek = $(this).data('obj'); 
+     if (geek && geek.id) {
+       console.log(geek);
+       window.location.hash = '#/geeks/' + geek.id + '/edit';
+     }
+     return false; 
+   })
+   .click(function(event) {
+     window.location.hash = '#/';
+     return false;
+   });
 
 });
 

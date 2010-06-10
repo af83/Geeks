@@ -64,9 +64,10 @@ scene = function(){
      var element = wrapper2.append(html)
                    .children(":last"); // the element we have just inserted
      ids2elements[obj.id] = element;
+     element.data('obj', obj);
      if(ext_obj.movable) element.addClass("drag");
      if(ext_obj.resizable) element.append('<div class="resize"></div>');
-     update_object(obj.id, ext_obj);
+     update_position_object(obj.id, ext_obj);
 
      element.filter(".drag")
      .jqdrag(function() {
@@ -83,7 +84,7 @@ scene = function(){
      });
    },
 
-   update_object = this.update_object = function(obj_id, obj) {
+   update_position_object = this.update_position_object = function(obj_id, obj) {
      /* Update the position of the object.
       * obj must contain the following properties: width, height, top, left, z.
       */
@@ -100,6 +101,13 @@ scene = function(){
        z: obj.z
      })
      .px2percent(ref_width, ref_height);
+   },
+
+   remove_object = this.remove_object = function(obj_id) {
+     /* Remove the object with given id from map.
+      */
+     ids2elements[obj_id].remove();
+     delete ids2elements[obj_id];
    },
 
    zoom = function(delta, event) {
@@ -143,10 +151,7 @@ scene = function(){
                   .height(height);
    };
 
-   scene_element.dblclick(function(event) {
-     zoom(12, event);
-     return false;
-   })
+   scene_element
    .mousewheel(function(event, delta) {
      zoom(delta * 4, event);
      return false;

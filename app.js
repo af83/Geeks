@@ -67,6 +67,18 @@ get('/geeks.json', function() {
 })
 
 
+get('/geeks/:id/edit', function(id) {
+  var self = this,
+      R = RFactory()
+
+  R.Geek.get({ids: id}, function(geek) {
+    self.render("edit_geek.html.haml", {locals: {geek: geek}, layout: false})
+  }, function(error) {
+    self.respond(501)
+  });
+})
+
+
 get('/urls.json', function() {
   var self = this,
       R = RFactory()
@@ -80,7 +92,10 @@ get('/urls.json', function() {
   })
 })
 
-
+/**
+ * Update existing Geek
+ * Needs JSON stuff in body request!
+ */
 post('/geeks/:id', function(id) {
   var R = RFactory(),
       self = this,
@@ -93,21 +108,28 @@ post('/geeks/:id', function(id) {
     delete geek.movable
     delete geek.resizable
   } catch (e) {
+    sys.puts(e)
     return self.respond(400)
   }
 
   R.Geek.update({
     ids: id,
     data: geek
-  }, function() {
-    var data = utils.extend({id: id}, geek)
-    websocket_listener.broadcast({event: "UpdateGeek", data: data})
-    self.respond(200)
+  }, function() { // reask for complete geek, as the updating data might be partial
+    R.Geek.get({ids: id}, function(geek) {
+      websocket_listener.broadcast({event: "UpdateGeek", data: geek})
+      self.respond(200)
+    }, function(error) {
+      self.respond(501)
+    })
   }, function() {
     self.respond(501)
   });
 });
 
+/**
+ * Create a new event
+ */
 post('/events', function() {
   event = JSON.parse(this.body)
   sys.puts('event: ' + JSON.stringify(event))
@@ -147,7 +169,7 @@ var jslibs = {
   'jquery.drag_resize': 'jquery.drag_resize/jquery.drag_resize.js',
   'jquery.mousewheel': 'jquery.mousewheel/jquery.mousewheel.js',
   'jquery.px2percent': 'jquery.px2percent/jquery.px2percent.js',
-  'sammy': 'sammy/lib/sammy.js'
+  'sammy': 'sammy/lib/sammy.js',
 }
 get('/public/js2/:name.js', function(name) {
   var path = jslibs[name]
