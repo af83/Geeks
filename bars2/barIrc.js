@@ -6,12 +6,13 @@ var sys = require("sys"),
     bar = require('./bar'),
     search = require('nodetk/text/search'),
     web = require('nodetk/web'),
-    R = require("../db").RFactory()
+    R = require("../db").RFactory(),
+    config = require("../config").barIrc
 
 
-var bot = new irc.Client('irc.freenode.net', 'geeks_bot', {
-    debug: true,
-    channels: ['#af83-lab']
+var bot = new irc.Client(config.network, config.nickname, {
+    debug: config.debug,
+    channels: config.channels
 })
 
 bot.addListener('error', function(message) {

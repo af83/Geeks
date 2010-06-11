@@ -10,3 +10,11 @@ exports.server = {
   // null = INADDR_ANY, set something else eventually.
   host: null
 }
+
+exports.barIrc = {
+  network: 'irc.freenode.net',
+  nickname: 'geeks_bot',
+  channels: ['#af83-lab', '#af83'],
+  debug: true
+}
+

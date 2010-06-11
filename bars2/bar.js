@@ -1,8 +1,10 @@
 var http = require('http'),
-    sys = require('sys')
+    sys = require('sys'),
+    config = require('../config')
 
 var get_client = function() {
-  var client = http.createClient(3000, 'localhost')
+  var client = http.createClient(config.server.port, 
+                                 config.server.host || 'localhost')
   client.addListener('error', function(error) {
     sys.debug(error)
   })
