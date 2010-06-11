@@ -14,7 +14,7 @@ exports.server = {
 exports.barIrc = {
   network: 'irc.freenode.net',
   nickname: 'geeks_bot',
-  channels: ['#af83-lab', '#af83'],
+  channels: ['#af83-lab'],
   debug: true
 }
 
