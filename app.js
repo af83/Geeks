@@ -2,10 +2,15 @@ GLOBAL.DEBUG = true
 
 require.paths.unshift(__dirname + "/vendor/Socket.IO-node/lib")
 require.paths.unshift(__dirname + "/vendor/nodetk/src")
+require.paths.unshift(__dirname + "/vendor/node-formidable/lib/")
 
 
-var sys     = require("sys"),
-    kiwi    = require("kiwi"),
+var GEEKS_AVATARS = __dirname + "/public/images/geeks/"
+
+
+var sys = require("sys"),
+    fs = require('fs'),
+    kiwi = require("kiwi"),
     io = require('socket.io'),
     utils = require("nodetk/utils"),
     debug = require("nodetk/logging").debug,
@@ -72,6 +77,7 @@ get('/geeks/:id/edit', function(id) {
       R = RFactory()
 
   R.Geek.get({ids: id}, function(geek) {
+    if(!geek) return self.respond(404);
     self.render("edit_geek.html.haml", {locals: {geek: geek}, layout: false})
   }, function(error) {
     self.respond(501)
@@ -117,6 +123,7 @@ post('/geeks/:id', function(id) {
     data: geek
   }, function() { // reask for complete geek, as the updating data might be partial
     R.Geek.get({ids: id}, function(geek) {
+      if(!geek) self.respond(404)
       websocket_listener.broadcast({event: "UpdateGeek", data: geek})
       self.respond(200)
     }, function(error) {
@@ -127,6 +134,36 @@ post('/geeks/:id', function(id) {
   });
 });
 
+/** Upload avatar for geek
+ */
+post('/geeks/:id/avatar', function(id) {
+  var self = this
+      avatar = this.param('avatar')
+      R = RFactory()
+
+  if(!avatar.filename || !avatar.tempfile) self.respond(400)
+  R.Geek.get({ids: id}, function(geek) {
+    var previous = geek.avatar_fname && parseInt(geek.avatar_fname.split('_')[1]) || 0
+    geek.avatar_fname = id + "_" + (previous + 1)
+
+    fs.rename(avatar.tempfile, GEEKS_AVATARS + geek.avatar_fname, function(error) {
+      if(error) return self.respond(502)
+      self.respond(200)//, JSON.stringify(geek.avatar_fname))
+      geek.save(function() {
+        setTimeout(function() {
+          // We wait a bit here to be sure express understant the fact that there
+          // is a new picture...
+          // XXX: fixme it defeats the use of "live" events ...
+          websocket_listener.broadcast({event: "UpdateGeek", data: geek})
+        }, 200);
+      })
+    })
+  }, function(err) {
+    self.respond(404)
+  })
+})
+
+
 /**
  * Create a new event
  */
@@ -135,7 +172,7 @@ post('/events', function() {
   sys.puts('event: ' + JSON.stringify(event))
   websocket_listener.broadcast(event)
   this.respond(200)
-});
+})
 
 /**
  * Create a new geek.
@@ -170,6 +207,7 @@ var jslibs = {
   'jquery.mousewheel': 'jquery.mousewheel/jquery.mousewheel.js',
   'jquery.px2percent': 'jquery.px2percent/jquery.px2percent.js',
   'sammy': 'sammy/lib/sammy.js',
+  'ajax-upload': 'ajax-upload/ajaxupload.js',
 }
 get('/public/js2/:name.js', function(name) {
   var path = jslibs[name]
@@ -191,6 +229,13 @@ post('/geeks/purge', function() {
         self.respond(400)
     })
 })
+
+
+post('/upload', function() {
+  sys.debug('/upload on express side')
+  return
+})
+
 
 var server = run()
 var websocket_listener = io.listen(server, {

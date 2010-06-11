@@ -15,6 +15,8 @@ var schema = {
         name: {type: "string"},
         nickname: {type: "string"},
         pole: {type: "string"},
+        avatar_fname: {type: "string"}, //avatar file name
+        // position on map:
         width: {type: "float"},
         height: {type: "float"},
         top: {type: "float"},

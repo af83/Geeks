@@ -59,7 +59,8 @@ scene = function(){
      if($.isFunction(ext_obj.title)) {
        ext_obj.title = ext_obj.title(obj);
      }
-     var html = '<div class="obj"><img src="' + ext_obj.src +
+     var src = $.isFunction(ext_obj.src) && ext_obj.src(obj) || ext_obj.src;
+     var html = '<div class="obj"><img src="' + src +
                 '" title="' + ext_obj.title + '"/></div>';
      var element = wrapper2.append(html)
                    .children(":last"); // the element we have just inserted

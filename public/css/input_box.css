@@ -19,3 +19,15 @@
 #input-box input[type=submit] {
   display: inline;
 }
+
+#upload_avatar img {
+  max-height: 30px;
+  max-width: 30px;
+  cursor: pointer;
+}
+
+#upload_avatar {
+  text-align: center;
+  cursor: pointer;
+}
+

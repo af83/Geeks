@@ -24,7 +24,10 @@ $(document).ready(function() {
       height: "30px",
       movable: true,
       resizable: true,
-      src: '/public/images/smiley.png',
+      src: function(geek) {
+        if(!geek.avatar_fname) return '/public/images/smiley.png';
+        return "/public/images/geeks/" + geek.avatar_fname;
+      },
       z: 2,
       top: 0,
       left: 0,
@@ -47,6 +50,9 @@ $(document).ready(function() {
     events_dispatcher.bind('UpdateGeek', function(geek) {
       geeks_map.remove_object(geek.id);
       geeks_map.add_object(geek, defaults);
+      if(window.location.hash == "#/geeks/" + geek.id + "/edit") {
+        $("#upload_avatar").html('<img src="'+defaults.src(geek)+'" />');
+      }
     });
 
     var irc_url = $('#irc_urls'),

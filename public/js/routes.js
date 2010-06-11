@@ -27,7 +27,24 @@ $.sammy(function() {
 
   this.get('#/geeks/:id/edit', function(env) {
     var id = env.params.id;
-    $.get('/geeks/'+id+'/edit', set_input);
+    $.get('/geeks/'+id+'/edit', function(html) {
+      set_input(html);
+
+      // Avatar uploading:
+      new AjaxUpload('upload_avatar', {
+        name: 'avatar',
+        action: '/geeks/'+id+'/avatar',
+        autoSubmit: true,
+        responseType: false,
+        onSubmit: function(file, ext) {
+          if (! (/^(jpg|png|jpeg|gif)$/i.test(ext))) {
+            alert("Invalid file extension!");
+            return false;
+          }
+        }
+      });
+
+    });
   });
 
   this.post('#/geeks/:id', function(env) {

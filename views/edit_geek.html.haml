@@ -1,4 +1,6 @@
 %form{ method:"post", action:"#/geeks/" + geek.id }
+  #upload_avatar
+    %img{ src:geek.avatar_fname && ("/public/images/geeks/" + geek.avatar_fname) || "/public/images/smiley.png"}
   %label{}
     Name:
     %input{ type:"text", name:"name", value:geek.name }

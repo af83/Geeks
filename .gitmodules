@@ -22,3 +22,6 @@
 [submodule "vendor/js_client/sammy"]
 	path = vendor/js_client/sammy
 	url = git://github.com/quirkey/sammy.git
+[submodule "vendor/js_client/ajax-upload"]
+	path = vendor/js_client/ajax-upload
+	url = git://github.com/valums/ajax-upload.git
