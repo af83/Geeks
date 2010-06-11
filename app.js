@@ -14,7 +14,8 @@ var sys = require("sys"),
     io = require('socket.io'),
     utils = require("nodetk/utils"),
     debug = require("nodetk/logging").debug,
-    RFactory = require("./db").RFactory
+    RFactory = require("./db").RFactory,
+    config = require('./config')
 
 debug.on()
 
@@ -237,7 +238,7 @@ post('/upload', function() {
 })
 
 
-var server = run()
+var server = run(config.server.port, config.server.host)
 var websocket_listener = io.listen(server, {
     resource: "socket.io", 
     transports: ['websocket'],
