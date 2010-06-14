@@ -13,8 +13,9 @@ events_dispatcher = (function() {
     return {bind: function(){}};
   }
   var mapper = {};
-
-  var ws_url = 'ws://' + window.location.host + '/socket.io/websocket';
+  var host = WS_PORT && (window.location.hostname + ':' + WS_PORT)
+             || window.location.host
+  var ws_url = 'ws://' + host + '/socket.io/websocket';
   var socket;
   
   (function init_socket() {

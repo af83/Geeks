@@ -7,7 +7,8 @@ exports.db = {
 
 exports.server = {
   port: 3000,
-  // null = INADDR_ANY, set something else eventually.
+  websocket_port: 3001,
+  // host: null = INADDR_ANY, set something else eventually.
   host: null
 }
 

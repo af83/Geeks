@@ -9,6 +9,7 @@ var GEEKS_AVATARS = __dirname + "/public/images/geeks/"
 
 
 var sys = require("sys"),
+    http = require("http"),
     fs = require('fs'),
     kiwi = require("kiwi"),
     io = require('socket.io'),
@@ -52,7 +53,12 @@ get('/', function() {
   self.contentType("html")
 
   R.Geek.index(function(result) {
-      self.render("index.html.haml", {locals: {geeks: result}})
+      self.render("index.html.haml", {
+        locals: {
+          geeks: result, 
+          WS_PORT: config.server.websocket_port
+        }
+      })
   }, function(err) {
       self.respond(400, "Database error")
   })
@@ -238,8 +244,17 @@ post('/upload', function() {
 })
 
 
-var server = run(config.server.port, config.server.host)
-var websocket_listener = io.listen(server, {
+var server = run(config.server.port, config.server.host),
+    server_ws
+
+if (config.server.port == config.server.websocket_port) {
+  server_ws = server
+} else {
+  server_ws = http.createServer()
+  server_ws.listen(config.server.websocket_port)
+}
+
+var websocket_listener = io.listen(server_ws, {
     resource: "socket.io", 
     transports: ['websocket'],
 })
