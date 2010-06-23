@@ -5,7 +5,7 @@ $(document).ready(function() {
         width: 1605,
         height: 714,
         objects: [
-          {src: "/public/images/plan_af1.png",
+          {src: "/public/images/planAfGeeks.png",
            id: 0,
            width: 100,
            height: 100,

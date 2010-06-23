@@ -7,16 +7,21 @@
     %link{type: "text/css", rel: "stylesheet", href: "/public/css/irc_url.css"}
     %link{type: "text/css", rel: "stylesheet", href: "/public/css/input_box.css"}
   %body
-    %ul
-      %li
-        %a.tool.as_dialog{ href:"#/geeks/new" } new geek
-    #irc_urls
-      URLs posted on IRC:
+    %div.header
       %ul
+        %li
+          %a.tool.as_dialog{ href:"#/geeks/new" } + new geek
+      .englobe
+        #irc_urls
+          %p.text
+            URLs posted on IRC:
+          %ul
+            %li eofiwjefoiwjefoiwjeofijweoif
+        %p.image
     != body
     #events
     #input-box
-    %p footer.
+    %div.footer
     %script{type: "text/javascript", src:"/public/js/jquery-1.4.js"}
     %script{type: "text/javascript", src:"/public/js2/sammy.js"}
     %script{type: "text/javascript", src:"/public/js/events.js"}

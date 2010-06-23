@@ -1,8 +1,52 @@
+* { margin: 0; padding: 0; border: 0; color: inherit; list-style-type: none; background: none; }
+body { /*width: 1605px;*/ margin: 0 auto; font-family: Arial, Georgia, "Times New Roman", serif; font-size: 12px; background-color: #000000; }
+a { text-decoration: none; }
+
+
+.header { 
+	position: relative;
+	height: 67px;
+	border-bottom: 5px solid black; 
+	background: url('../images/logoGeeks.png') 10px center no-repeat, url('../images/header_bg.png') 0 0 repeat-x;
+}
+
+.header ul {
+	display: inline-block;
+	list-style-type: none;
+	margin-left: 5%;
+	vertical-align: bottom;
+}
+
+.header ul li a {
+	position: absolute;
+	top: 34px;
+	left: 220px;
+	z-index: 10;
+	padding: 5px;
+	font-size: 20px;
+	font-family: Arial;
+	font-weight: bold;
+	color: #c4c4c4;
+	text-decoration: none;
+	background-image: -moz-linear-gradient(100% 100% 90deg, #000, #646464);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#646464), to(#000));
+	)
+}
+
+.header ul li a.active {
+	top: 37px;
+	padding: 0 5px 28px 0;
+	color: #000;
+	border: 3px solid black;
+	background: white;
+}
+
 #map {
  border:1px solid black;
  /* Unactivate to let the user bring back objects inside room ? */
  overflow: hidden;
  position: relative;
+ background: #fff;
 }
 
 div.obj img {
@@ -31,5 +75,11 @@ div.obj:hover .resize {
  cursor: se-resize;
  background: red;
  height:5px;
+}
+
+.footer {
+	height: 200px;
+	margin-top: 150px;
+	background: #d7d7d7 url('../images/footer_mascotte.png') center no-repeat;
 }
 

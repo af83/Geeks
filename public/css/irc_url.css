@@ -1,24 +1,65 @@
-#irc_urls {
+.englobe {
   position: absolute;
   top: 0;
   right: 0;
-  max-height: 150px;
-  max-width: 450px;
-  z-index: 4;
-  background-color: white;
-  border: 1px solid black;
-  overflow-y: scroll;
-  overflox-x: hidden;
-  padding: 5px;
+  width: 450px;
+  height: 40px;
+  padding-right: 50px;
+  overflow: hidden;
 }
 
-#irc_urls ul {
-  list-style-type: none;
-  padding: 0;
+.englobe #irc_urls {
+  position: absolute;
+  bottom: 40px;
+  width: 450px;
+  max-height: 150px;
+  padding: 5px;
+  z-index: 4;
+  background-color: white;
+  border: 3px solid #3b3b3b;
+  /*overflow-y: scroll;
+    overflow-x: hidden;*/
+}
+
+.englobe #irc_urls p.text {
+}
+
+.englobe #irc_urls ul {
+  display: block;  
   margin: 0;
 }
 
-#irc_urls li {
-  padding-left: 5px;
+.englobe #irc_urls li {
+	padding: 5px;
 }
 
+.englobe #irc_urls li.backGrey {
+	background: #eee;
+} 
+
+.englobe #irc_urls li a {
+	color: #000;
+}
+
+.englobe p.image {
+	position: absolute;
+	bottom: 20px;
+	left: 150px;
+	width: 150px;
+	height: 20px;
+	-moz-box-shadow: 0 10px 10px #9f9f9f;
+	-webkit-box-shadow: 0 10px 10px #9f9f9f;
+	-moz-border-radius: 0 0 10px 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-webkit-transition: 1s linear;
+	background: #d1d1d1 url('../images/feedz.png') center 0 no-repeat;
+}
+
+.englobe:hover {
+	height: 135%;
+}
+
+.englobe:hover p.image {
+	background: #3b3b3b url('../images/feedz_active.png') center 0 no-repeat;
+}

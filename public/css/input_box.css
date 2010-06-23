@@ -1,23 +1,51 @@
 
 #input-box {
-  position: fixed;
-  bottom: 1px;
-  left: 1px;
-  border:1px solid black;
-  max-width: 200px;
-  max-height: 300px;
-  z-index: 10;
-  background-color: white;
   display: none;
+  position: absolute;
+  top: 200px;
+  left: 295px;
+  width: 235px;
+  padding-top: 13px;
+  z-index: 10;
+  border: 4px solid black;
+  background-color: white;
 }
 
-#input-box label,
-#input-box input {
- display: block; 
+#input-box img {
+	position: absolute;
+	bottom: 187px;
+	left: 40px;
+}
+
+#input-box input[type=text] {
+  display: block; 
+  width: 212px;
+  height: 35px;
+  margin: 4px auto;
+  padding: 0 0 0 3px;
+  font-size: 21px;
+  letter-spacing: -1px;
+  color: #c6c6c6;
+  border: 4px solid #3b3b3b;
+  background: #3b3b3b;
+  -webkit-transition: 400ms linear;
+}
+
+#input-box input:focus[type=text] {
+  color: #3b3b3b;
+  border: 4px solid #afafaf;
+  background: white;
+  -webkit-animation: 'pulsate' 500ms linear infinite alternate;
 }
 
 #input-box input[type=submit] {
-  display: inline;
+	display: inline-block;
+	float: right;
+	line-height: 38px;
+	margin: 0 5px 4px 0;
+	font-size: 30px;
+	font-weight: bold;
+	letter-spacing: -3px;
 }
 
 #upload_avatar img {
@@ -31,3 +59,7 @@
   cursor: pointer;
 }
 
+@-webkit-keyframes 'pulsate' { 
+	from { -webkit-transform: scale(1); }
+	to   { -webkit-transform: scale(0.95); }
+ 	}
