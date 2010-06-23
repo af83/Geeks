@@ -20,7 +20,8 @@ $.sammy(function() {
   });
 
   this.post('#/geeks', function(env) {
-    $.post('/geeks', env.params.toHash());
+    var geek = new R.Geek(env.params.toHash());
+    geek.save();
     this.redirect('#/');
     return false;
   });
@@ -48,8 +49,8 @@ $.sammy(function() {
   });
 
   this.post('#/geeks/:id', function(env) {
-    var id = env.params.id;
-    $.post('/geeks/' + id, JSON.stringify(env.params.toHash()));
+    var geek = new R.Geek(env.params.toHash());
+    geek.save();
     this.redirect('#/');
     return false;
   });

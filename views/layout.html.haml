@@ -32,4 +32,29 @@
     %script{type: "text/javascript", src:"/public/js/routes.js"}
     %script{type: "text/javascript", src:"/public/js/map.js"}
     %script{type: "text/javascript", src:"/public/js/init.js"}
-
+    
+    %script{type: "text/javascript", src:"/init_browser.js"}
+    %script{type: "text/javascript", src:"/yabble.js"}
+    :javascript 
+      require.reset();
+      require.useScriptTags();
+      require.setModuleRoot('wrapped_js/');
+      require.ensure([
+        'sys',
+        'events',
+        //
+        'schema',
+        //
+        'rest-mongo/core',
+        'rest-mongo/http_rest/jquery_backend',
+        'nodetk/logging',
+        'nodetk/orchestration/callbacks',
+        'nodetk/utils',
+      ], function(require) {
+        var schema = require('schema').schema;
+        var backend = require('rest-mongo/http_rest/jquery_backend').get_backend();
+        var RFactory = require('rest-mongo/core').getRFactory(schema, backend);
+        R = RFactory();
+        init_geeks();
+      });
+    
