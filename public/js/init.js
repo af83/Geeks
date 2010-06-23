@@ -1,4 +1,6 @@
-$(document).ready(function() {
+init_geeks = function() {
+
+  $(document).ready(function() {
 
     var geeks_map = new scene({
         // Must keep the background ratio:
@@ -35,19 +37,19 @@ $(document).ready(function() {
         return geek.name + " aka " + geek.nickname;
       },
       update_callback: function(geek) {
-        var data = JSON.stringify(geek);
-        $.post('/geeks/'+geek.id, data);
+        geek.save();
       }
     },
     add_geek = function(geek) {
       geeks_map.add_object(geek, defaults);
     };
 
-    $.getJSON('/geeks.json', function(geeks) {
+    R.Geek.index(function(geeks) {
       geeks.forEach(add_geek);
     });
     events_dispatcher.bind('NewGeek', add_geek);
-    events_dispatcher.bind('UpdateGeek', function(geek) {
+    events_dispatcher.bind('UpdateGeek', function(json_geek) {
+      var geek = new R.Geek(json_geek);
       geeks_map.remove_object(geek.id);
       geeks_map.add_object(geek, defaults);
       if(window.location.hash == "#/geeks/" + geek.id + "/edit") {
@@ -74,7 +76,6 @@ $(document).ready(function() {
    $('#map .obj').live('dblclick', function(event) {
      var geek = $(this).data('obj'); 
      if (geek && geek.id) {
-       console.log(geek);
        window.location.hash = '#/geeks/' + geek.id + '/edit';
      }
      return false; 
@@ -84,5 +85,6 @@ $(document).ready(function() {
      return false;
    });
 
-});
+  });
+};
 
