@@ -47,6 +47,7 @@
 	left: 150px;
 	width: 150px;
 	height: 20px;
+	text-indent: -9999px;
 	-moz-box-shadow: 0 10px 10px #9f9f9f;
 	-webkit-box-shadow: 0 10px 10px #9f9f9f;
 	-moz-border-radius: 0 0 10px 10px;

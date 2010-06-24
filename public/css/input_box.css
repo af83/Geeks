@@ -3,7 +3,7 @@
   display: none;
   position: absolute;
   top: 200px;
-  left: 295px;
+  left: 265px;
   width: 235px;
   padding-top: 13px;
   z-index: 10;
@@ -46,6 +46,7 @@
 	font-size: 30px;
 	font-weight: bold;
 	letter-spacing: -3px;
+	cursor: pointer;
 }
 
 #upload_avatar img {

@@ -46,6 +46,7 @@ a { text-decoration: none; }
  /* Unactivate to let the user bring back objects inside room ? */
  overflow: hidden;
  position: relative;
+ margin: 0 auto;
  background: #fff;
 }
 
@@ -56,6 +57,7 @@ div.obj img {
 
 div.obj {
   position: absolute;
+  border: 3px solid black;
   z-index: 3;
 }
 
@@ -64,7 +66,8 @@ div.drag {
 }
 
 div.drag:hover {
-  border: 1px solid #1ef656;
+  -webkit-transform: scale(1.2);
+  -moz-transform: scale(1.2);
 }
 
 div.obj:hover .resize {
