@@ -186,14 +186,15 @@ post('/events', function() {
  */
 post("/geeks", function() {
     var self = this,
-        R = RFactory()
+        R = RFactory(),
+        data
 
-    var geek = new R.Geek({name: this.param("name"),
-                           nickname: this.param("nickname"),
-                           pole: this.param("pole")
-    })
+    try { data = JSON.parse(self.body) }
+    catch (e) { return self.respond(400) }
+
+    var geek = new R.Geek(data)
     geek.save(function() {
-        websocket_listener.broadcast({event: "NewGeek", data: geek})
+        websocket_listener.broadcast({event: "NewGeek", data: geek.json()})
         self.respond(201)
     }, function(err) {
         self.respond(400, "failed")
