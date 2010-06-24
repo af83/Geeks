@@ -65,7 +65,7 @@ get('/', function() {
 })
 
 
-get('/geeks.json', function() {
+get('/geeks', function() {
   var self = this,
       R = RFactory()
   self.contentType("json")
@@ -109,7 +109,7 @@ get('/urls.json', function() {
  * Update existing Geek
  * Needs JSON stuff in body request!
  */
-post('/geeks/:id', function(id) {
+put('/geeks/:id', function(id) {
   var R = RFactory(),
       self = this,
       geek
@@ -186,14 +186,15 @@ post('/events', function() {
  */
 post("/geeks", function() {
     var self = this,
-        R = RFactory()
+        R = RFactory(),
+        data
 
-    var geek = new R.Geek({name: this.param("name"),
-                           nickname: this.param("nickname"),
-                           pole: this.param("pole")
-    })
+    try { data = JSON.parse(self.body) }
+    catch (e) { return self.respond(400) }
+
+    var geek = new R.Geek(data)
     geek.save(function() {
-        websocket_listener.broadcast({event: "NewGeek", data: geek})
+        websocket_listener.broadcast({event: "NewGeek", data: geek.json()})
         self.respond(201)
     }, function(err) {
         self.respond(400, "failed")
@@ -207,7 +208,7 @@ get("/geeks/new", function(){
   this.render("new_geek.html.haml", { layout: false })
 })
 
-/* Serve JS client files from git submodules in /vendor/js_client/ dir.
+/* Serve JS client files from git submodules dir.
  */
 var jslibs = {
   'jquery.drag_resize': 'jquery.drag_resize/jquery.drag_resize.js',
@@ -257,5 +258,20 @@ if (config.server.port == config.server.websocket_port) {
 var websocket_listener = io.listen(server_ws, {
     resource: "socket.io", 
     transports: ['websocket'],
+})
+
+
+// To serve JS code from nodejs sources:
+require.paths.unshift(__dirname + "/public/js");
+require.paths.unshift(__dirname);
+var bserver = require('nodetk/browser/server');
+bserver.serve_modules(server, {
+  modules: ['assert', 'sys', 'schema'],
+  packages: ['nodetk', 'rest-mongo'],
+})
+// to avoid having express returning 404 error on these:
+// (served by bserver)
+get(/\/(wrapped_js\/.*)|(init_browser\.js)|(yabble\.js)/, function() {
+  return false;   
 })
 

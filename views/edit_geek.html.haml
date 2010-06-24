@@ -1,14 +1,9 @@
+%img{ src:"/public/images/geek_Mascotte.png" }
+#upload_avatar
+  %img{ src:geek.avatar_fname && ("/public/images/geeks/" + geek.avatar_fname) || "/public/images/smiley.png"}
 %form{ method:"post", action:"#/geeks/" + geek.id }
-  #upload_avatar
-    %img{ src:geek.avatar_fname && ("/public/images/geeks/" + geek.avatar_fname) || "/public/images/smiley.png"}
-  %label{}
-    Name:
-    %input{ type:"text", name:"name", value:geek.name }
-  %label{}
-    Nickname:
-    %input{ type:"text", name:"nickname", value:geek.nickname}
-  %label{}
-    Pole:
-    %input{ type:"text", name:"pole", value:geek.pole }
+  %input{ type:"text", name:"name", value:geek.name, title:"Name" }
+  %input{ type:"text", name:"nickname", value:geek.nickname, title:"Nickname" }
+  %input{ type:"text", name:"pole", value:geek.pole, title:"Pool" }
   %input{ type:"submit", value:"Save" }
 
