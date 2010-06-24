@@ -47,6 +47,7 @@ a { text-decoration: none; }
  overflow: hidden;
  position: relative;
  background: #fff;
+ margin: 0 auto;
 }
 
 div.obj img {
