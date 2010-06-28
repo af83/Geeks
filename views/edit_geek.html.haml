@@ -1,6 +1,6 @@
 %img{ src:"/public/images/geek_Mascotte.png" }
 #upload_avatar
-  %img{ src:geek.avatar_fname && ("/public/images/geeks/" + geek.avatar_fname) || "/public/images/smiley.png"}
+  %img{src:avatar}
 %form{ method:"post", action:"#/geeks/" + geek.id }
   %input{ type:"text", name:"name", value:geek.name, title:"Name" }
   %input{ type:"text", name:"nickname", value:geek.nickname, title:"Nickname" }

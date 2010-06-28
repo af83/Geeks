@@ -11,9 +11,9 @@
   background-color: white;
 }
 
-#input-box img {
+#input-box>img {
 	position: absolute;
-	bottom: 187px;
+	bottom: 218px;
 	left: 40px;
 }
 

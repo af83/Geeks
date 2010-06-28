@@ -46,11 +46,13 @@ $.sammy(function() {
   this.get('#/geeks/:id/edit', function(env) {
     before();
     var id = env.params.id;
+    var ajax_upload;
+
     $.get('/geeks/'+id+'/edit', function(html) {
       set_input(html);
 
       // Avatar uploading:
-      new AjaxUpload('upload_avatar', {
+      ajax_upload = new AjaxUpload('upload_avatar', {
         name: 'avatar',
         action: '/geeks/'+id+'/avatar',
         autoSubmit: true,
@@ -66,6 +68,11 @@ $.sammy(function() {
     });
     before_change = function() {
       input_box.hide();
+      // We remove the file input added previously (if any added):
+      ajax_upload.disable();
+      console.log(ajax_upload._button.parentNode);
+      $('body div input[name="avatar"]').parent().remove();
+      delete ajax_upload;
     };
   });
 
