@@ -1,8 +1,18 @@
 $.sammy(function() {
 
+  var before_change; // if set, to be ran before every change of url hash
+  var before = function() {
+    if(before_change) {
+      before_change();
+      before_change = null;
+    }
+  };
+  var input_box = $('#input-box'),
+      new_geek_link = $('.header ul li a[href="#/geeks/new"]');
+
   var set_input = function(html) {
-    $('#input-box').html(html).show()
-                   .find('input').first().focus();
+    input_box.html(html).show()
+             .find('input').first().focus();
   };
 
 
@@ -12,14 +22,21 @@ $.sammy(function() {
   });
 
   this.get('#/', function() {
-    $('#input-box').hide();
+    before();
   });
 
   this.get('#/geeks/new', function() {
+    before();
     $.get('/geeks/new', set_input);
+    new_geek_link.addClass('active')
+    before_change = function() {
+      input_box.hide();
+      new_geek_link.removeClass('active');
+    };
   });
 
   this.post('#/geeks', function(env) {
+    before();
     var geek = new R.Geek(env.params.toHash());
     geek.save();
     this.redirect('#/');
@@ -27,6 +44,7 @@ $.sammy(function() {
   });
 
   this.get('#/geeks/:id/edit', function(env) {
+    before();
     var id = env.params.id;
     $.get('/geeks/'+id+'/edit', function(html) {
       set_input(html);
@@ -46,9 +64,13 @@ $.sammy(function() {
       });
 
     });
+    before_change = function() {
+      input_box.hide();
+    };
   });
 
   this.post('#/geeks/:id', function(env) {
+    before();
     var geek = new R.Geek(env.params.toHash());
     geek.save();
     this.redirect('#/');
