@@ -58,8 +58,11 @@ div.obj img {
 
 div.obj {
   position: absolute;
-  border: 3px solid black;
   z-index: 3;
+}
+
+div.obj.geek {
+  border: 3px solid black;
 }
 
 div.drag {
