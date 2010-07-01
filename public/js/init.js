@@ -26,6 +26,7 @@ init_geeks = function() {
       height: "30px",
       movable: true,
       resizable: true,
+      css_classes: ['geek'],
       src: function(geek) {
         if(!geek.avatar_fname) return '/public/images/smiley.png';
         return "/public/images/geeks/" + geek.avatar_fname;

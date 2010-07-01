@@ -85,7 +85,13 @@ get('/geeks/:id/edit', function(id) {
 
   R.Geek.get({ids: id}, function(geek) {
     if(!geek) return self.respond(404);
-    self.render("edit_geek.html.haml", {locals: {geek: geek}, layout: false})
+    var avatar;
+    if(geek.avatar_fname) avatar = "/public/images/geeks/" + geek.avatar_fname;
+    else avatar = "/public/images/smiley.png";
+    self.render("edit_geek.html.haml", {locals: {
+      geek: geek,
+      avatar: avatar
+    }, layout: false})
   }, function(error) {
     self.respond(501)
   });
