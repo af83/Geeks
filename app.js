@@ -103,7 +103,7 @@ get('/urls.json', function() {
       R = RFactory()
   self.contentType("json")
 
-  R.URL.index(function(urls) {
+  R.URL.index({query: {_limit: 50}}, function(urls) {
     urls = urls.map(function(url) {return url.json()});
     self.respond(200, JSON.stringify(urls))
   }, function(error) {
