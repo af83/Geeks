@@ -19,12 +19,6 @@
 	left: 40px;
 }
 
-#input-box #upload_avatar img {
-	position: absolute;
-	bottom: 225px;
-	left: 96px;
-}
-
 #input-box input[type=text] {
   display: block; 
   width: 212px;

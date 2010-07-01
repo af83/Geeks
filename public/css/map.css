@@ -61,16 +61,8 @@ div.obj {
   z-index: 3;
 }
 
-div.obj.geek {
-  border: 3px solid black;
-}
-
 div.drag {
   cursor: move;
-}
-
-div.obj.drag {
-	border: 3px solid black;
 }
 
 div.obj.drag:active {
