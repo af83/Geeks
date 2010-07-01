@@ -104,6 +104,7 @@ get('/urls.json', function() {
   self.contentType("json")
 
   R.URL.index({query: {_limit: 50}}, function(urls) {
+    urls.reverse();
     urls = urls.map(function(url) {return url.json()});
     self.respond(200, JSON.stringify(urls))
   }, function(error) {
