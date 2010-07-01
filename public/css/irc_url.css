@@ -2,23 +2,20 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 450px;
+  width: 500px;
   height: 40px;
-  padding-right: 50px;
   overflow: hidden;
+  -webkit-transition: 500ms ease-in-out;
 }
 
 .englobe #irc_urls {
   position: absolute;
   bottom: 40px;
   width: 450px;
-  max-height: 150px;
   padding: 5px;
   z-index: 4;
   background-color: white;
   border: 3px solid #3b3b3b;
-  /*overflow-y: scroll;
-    overflow-x: hidden;*/
 }
 
 .englobe #irc_urls p.text {
@@ -26,19 +23,26 @@
 
 .englobe #irc_urls ul {
   display: block;  
+  height: 230px;
   margin: 0;
+  overflow: auto;
 }
 
 .englobe #irc_urls li {
 	padding: 5px;
 }
 
-.englobe #irc_urls li.backGrey {
+.englobe #irc_urls li:nth-child(2n) {
 	background: #eee;
 } 
 
+.englobe #irc_urls li span{
+	color: #696969;
+}
+
 .englobe #irc_urls li a {
-	color: #000;
+	display: block;
+	text-decoration: underline;
 }
 
 .englobe p.image {
@@ -48,6 +52,7 @@
 	width: 150px;
 	height: 20px;
 	text-indent: -9999px;
+	z-index: 10;
 	-moz-box-shadow: 0 10px 10px #9f9f9f;
 	-webkit-box-shadow: 0 10px 10px #9f9f9f;
 	-moz-border-radius: 0 0 10px 10px;
@@ -58,7 +63,7 @@
 }
 
 .englobe:hover {
-	height: 135%;
+	height: 300px;
 }
 
 .englobe:hover p.image {

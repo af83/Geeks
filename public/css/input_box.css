@@ -9,12 +9,20 @@
   z-index: 10;
   border: 4px solid black;
   background-color: white;
+  -webkit-box-shadow: rgba(100, 100, 100, 1.2) 10px 10px 10px;
+  -moz-box-shadow: rgba(100, 100, 100, 1.2) 10px 10px 10px;
 }
 
-#input-box img {
+#input-box > img {
 	position: absolute;
 	bottom: 187px;
 	left: 40px;
+}
+
+#input-box #upload_avatar img {
+	position: absolute;
+	bottom: 225px;
+	left: 96px;
 }
 
 #input-box input[type=text] {
@@ -43,10 +51,15 @@
 	float: right;
 	line-height: 38px;
 	margin: 0 5px 4px 0;
+	padding: 0 2px;
 	font-size: 30px;
 	font-weight: bold;
 	letter-spacing: -3px;
 	cursor: pointer;
+}
+
+#input-box input[type=submit]:hover {
+	-webkit-animation: 'rotate' 500ms ease-in-out 200ms 1 alternate;
 }
 
 #upload_avatar img {
@@ -63,4 +76,9 @@
 @-webkit-keyframes 'pulsate' { 
 	from { -webkit-transform: scale(1); }
 	to   { -webkit-transform: scale(0.95); }
+ 	}
+
+@-webkit-keyframes 'rotate' { 
+	from { -webkit-transform: rotate(0deg); }
+	to   { -webkit-transform: rotate(360deg); }
  	}

@@ -10,14 +10,14 @@ a { text-decoration: none; }
 	background: url('../images/logoGeeks.png') 10px center no-repeat, url('../images/header_bg.png') 0 0 repeat-x;
 }
 
-.header ul {
+.header ul.toBeExtended {
 	display: inline-block;
 	list-style-type: none;
 	margin-left: 5%;
 	vertical-align: bottom;
 }
 
-.header ul li a {
+.header ul.toBeExtended li a {
 	position: absolute;
 	top: 34px;
 	left: 220px;
@@ -33,7 +33,7 @@ a { text-decoration: none; }
 	)
 }
 
-.header ul li a.active {
+.header ul.toBeExtended li a.active {
 	top: 37px;
 	padding: 0 5px 28px 0;
 	color: #000;
@@ -58,7 +58,6 @@ div.obj img {
 
 div.obj {
   position: absolute;
-  border: 3px solid black;
   z-index: 3;
 }
 
@@ -66,9 +65,15 @@ div.drag {
   cursor: move;
 }
 
-div.drag:hover {
+div.obj.drag {
+	border: 3px solid black;
+}
+
+div.obj.drag:active {
   -webkit-transform: scale(1.2);
   -moz-transform: scale(1.2);
+  -moz-box-shadow: rgba(100, 100, 100, 1.2) 5px 5px 5px;
+  -webkit-box-shadow: rgba(100, 100, 100, 1.2) 5px 5px 5px;
 }
 
 div.obj:hover .resize {
