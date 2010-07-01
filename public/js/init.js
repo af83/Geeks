@@ -48,7 +48,10 @@ init_geeks = function() {
     R.Geek.index(function(geeks) {
       geeks.forEach(add_geek);
     });
-    events_dispatcher.bind('NewGeek', add_geek);
+    events_dispatcher.bind('NewGeek', function(json_geek) {
+      var geek = new R.Geek(json_geek);
+      add_geek(geek);
+    });
     events_dispatcher.bind('UpdateGeek', function(json_geek) {
       var geek = new R.Geek(json_geek);
       geeks_map.remove_object(geek.id);
