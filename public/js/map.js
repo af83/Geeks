@@ -61,11 +61,11 @@ scene = function(){
      }
      var src = $.isFunction(ext_obj.src) && ext_obj.src(obj) || ext_obj.src;
      var css_classes = ext_obj.css_classes || [];
-     css_classes.push('obj');
      var html = '<div class="' + css_classes.join(' ') + '"><img src="' + src +
                 '" title="' + ext_obj.title + '"/></div>';
      var element = wrapper2.append(html)
                    .children(":last"); // the element we have just inserted
+     element.addClass('obj');
      ids2elements[obj.id] = element;
      element.data('obj', obj);
      if(ext_obj.movable) element.addClass("drag");
