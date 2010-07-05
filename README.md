@@ -30,7 +30,7 @@ Express framework
 In order to use Geeks, you first need to install "kiwi" which is a small package
 management tool.
 
-  $ git clone http://github.com/visionmedia/kiwi
+  $ git clone http://github.com/visionmedia/kiwi.git
   $ cd kiwi
   $ sudo make
 
