@@ -2,8 +2,8 @@
 #upload_avatar
   %img{src:avatar}
 %form{ method:"post", action:"#/geeks/" + geek.id }
-  %input{ type:"text", name:"name", value:geek.name, title:"Name" }
-  %input{ type:"text", name:"nickname", value:geek.nickname, title:"Nickname" }
-  %input{ type:"text", name:"pole", value:geek.pole, title:"Pool" }
+  %input{ type:"text", name:"name", value:geek.name, title:"Name", placeholder:"Name" }
+  %input{ type:"text", name:"nickname", value:geek.nickname, title:"Nickname", placeholder:"Nickname" }
+  %input{ type:"text", name:"pole", value:geek.pole, title:"Pool", placeholder:"Pool" }
   %input{ type:"submit", value:"save" }
 
