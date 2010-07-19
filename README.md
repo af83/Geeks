@@ -12,7 +12,7 @@ Installation
 Node.js
 -------
 
-Geeks works with node -v v0.1.98
+Geeks works with node -v v0.1.100
 
 Git Repository
 --------------
@@ -37,7 +37,7 @@ management tool.
 kiwi is installed. Geeks has two dependencies based on visionmedia's work, that
 need to be installed with kiwi: Express, and HAML. Install them with:
 
-  $ kiwi install express 0.14.0
+  $ kiwi install express 0.14.1
   $ kiwi install haml 0.4.5
 
 
