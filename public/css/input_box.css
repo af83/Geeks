@@ -57,14 +57,22 @@
 }
 
 #upload_avatar img {
-  max-height: 30px;
-  max-width: 30px;
+  max-height: 60px;
+  max-width: 60px;
   cursor: pointer;
 }
 
 #upload_avatar {
   text-align: center;
   cursor: pointer;
+  display:inline-block;
+  position:absolute;
+  margin-top:-70px;
+  margin-left:95px;
+  background: white;
+  height: 60px;
+  width: 60px;
+  overflow: hidden;
 }
 
 @-webkit-keyframes 'pulsate' { 
