@@ -25,3 +25,12 @@
 [submodule "vendor/js_client/ajax-upload"]
 	path = vendor/js_client/ajax-upload
 	url = git://github.com/valums/ajax-upload.git
+[submodule "vendor/connect"]
+	path = vendor/connect
+	url = git://github.com/senchalabs/connect.git
+[submodule "vendor/mustache.js"]
+	path = vendor/mustache.js
+	url = git://github.com/janl/mustache.js.git
+[submodule "vendor/jquery.mustache"]
+	path = vendor/jquery.mustache
+	url = git://github.com/AF83/jquery.mustache.git

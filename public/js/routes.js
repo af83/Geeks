@@ -10,8 +10,8 @@ $.sammy(function() {
   var input_box = $('#input-box'),
       new_geek_link = $('.header ul li a[href="#/geeks/new"]');
 
-  var set_input = function(html) {
-    input_box.html(html).show()
+  var show_input = function() {
+    input_box.show()
              .find('input').first().focus();
   };
 
@@ -27,7 +27,8 @@ $.sammy(function() {
 
   this.get('#/geeks/new', function() {
     before();
-    $.get('/geeks/new', set_input);
+    input_box.renders('new_geek.html');
+    show_input();
     new_geek_link.addClass('active')
     before_change = function() {
       input_box.hide();
@@ -48,8 +49,9 @@ $.sammy(function() {
     var id = env.params.id;
     var ajax_upload;
 
-    $.get('/geeks/'+id+'/edit', function(html) {
-      set_input(html);
+    R.Geek.get({ids: id}, function(geek) {
+      input_box.renders('edit_geek.html', geek)
+      show_input();
 
       // Avatar uploading:
       ajax_upload = new AjaxUpload('upload_avatar', {

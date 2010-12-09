@@ -24,6 +24,7 @@ exports.schema = {
   },
 
   URL: {
+    resource: '/urls',
     schema: {
       id: "URL",
       description: "URL, potentially interesting for geeks",

@@ -7,7 +7,7 @@ init_geeks = function() {
         width: 1605,
         height: 714,
         objects: [
-          {src: "/public/images/planAfGeeks.png",
+          {src: "/images/planAfGeeks.png",
            id: 0,
            width: 100,
            height: 100,
@@ -28,8 +28,8 @@ init_geeks = function() {
       resizable: true,
       css_classes: ['geek'],
       src: function(geek) {
-        if(!geek.avatar_fname) return '/public/images/smiley.png';
-        return "/public/images/geeks/" + geek.avatar_fname;
+        if(!geek.avatar_fname) return '/images/smiley.png';
+        return "/images/geeks/" + geek.avatar_fname;
       },
       z: 2,
       top: 0,
@@ -69,7 +69,7 @@ init_geeks = function() {
       irc_url.scrollTop(irc_url[0].scrollHeight);
     };
     events_dispatcher.bind('IrcURL', add_url);
-    $.getJSON('/urls.json', function(urls) {
+    R.URL.index(function(urls) {
       urls.forEach(add_url);
     });
 

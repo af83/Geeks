@@ -1,3 +1,11 @@
 .*.swp
 public/images/geeks/*
+public/js/ajaxupload.js
+public/js/jquery.drag_resize.js
+public/js/jquery.mousewheel.js
+public/js/jquery.px2percent.js
+public/js/sammy.js
+public/js/mustache.js
+templates/i18n/*
+public/js/templates_*.js
 
