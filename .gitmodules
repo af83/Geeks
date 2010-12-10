@@ -34,3 +34,9 @@
 [submodule "vendor/jquery.mustache"]
 	path = vendor/jquery.mustache
 	url = git://github.com/AF83/jquery.mustache.git
+[submodule "vendor/connect-form"]
+	path = vendor/connect-form
+	url = git://github.com/visionmedia/connect-form.git
+[submodule "vendor/node-formidable"]
+	path = vendor/node-formidable
+	url = git://github.com/felixge/node-formidable.git

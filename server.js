@@ -1,7 +1,9 @@
 
 // Add location of submodules to path:
 [ 'connect/lib'
+, 'connect-form/lib'
 , 'mustache.js/lib'
+, 'node-formidable/lib'
 , 'nodetk/src'
 , 'rest-mongo/src'
 , 'Socket.IO-node/lib'
@@ -10,6 +12,7 @@
 });
 
 var connect = require('connect')
+  , connect_form = require('connect-form')
 
   , bserver = require('nodetk/browser/server')
   , rest_server = require('rest-mongo/http_rest/server')
@@ -32,6 +35,7 @@ var serve_modules_connector = bserver.serve_modules_connector({
 // The middlewares stack:
 var server = connect.createServer(
   connect.staticProvider({root: __dirname + '/public', cache: false})
+, connect_form({keepExtensions: true})
 , geeks_app.connector()
 , rest_server.connector(RFactory, schema, {eventEmitter: geeks_events.emitter})
 , serve_modules_connector
