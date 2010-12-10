@@ -26,7 +26,7 @@
 
   <div id="map"></div>
 
-  <script type="text/javascript">WS_PORT=3000;</script>
+  <script type="text/javascript">WS_PORT={{ws_port}};</script>
   <div id="events"></div>
   <div id="input-box"></div>
   <div class="footer"></div>

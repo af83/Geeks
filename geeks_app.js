@@ -1,12 +1,13 @@
 var fs = require('fs')
   , URL = require('url')
 
+  , config = require('./config')
   , geeks_events = require('./geeks_events')
   , ms_templates = require('./ms_templates')
   , RFactory = require('./model').RFactory
   ;
 
-var AVATARS_DIR = __dirname + "/public/images/geeks/"
+var AVATARS_DIR = __dirname + "/public/images/geeks/";
 
 var error = function(res, err) {
   console.error(err);
@@ -18,7 +19,9 @@ var error = function(res, err) {
 var index = function(req, res) {
   /* Serve the app HTML page. */
   res.writeHead(200, {'Content-Type': 'text/HTML; charset=utf-8'});
-  var html = ms_templates.render('index.html');
+  var html = ms_templates.render('index.html', {
+    ws_port: config.server.websocket_port
+  });
   res.end(html);
 };
 
