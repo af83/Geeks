@@ -40,6 +40,7 @@ var server = connect.createServer(
 , rest_server.connector(RFactory, schema, {eventEmitter: geeks_events.emitter})
 , connect_form({keepExtensions: true})
 , geeks_app.connector()
+, geeks_events.connector
 , serve_modules_connector
 );
 

@@ -1,10 +1,12 @@
 /* This is where are handled "live" events of the application. 
  */
 var events = require('events')
+  , URL = require('url')
 
   , io = require('socket.io')
-
   , extend = require('nodetk/utils').extend
+
+  , error = require('./utils').error
   ;
 
 
@@ -42,5 +44,32 @@ var listen = exports.listen = function(server) {
     resource: "socket.io"
   , transports: ['websocket']
   });
+};
+
+
+// -----------------------------------
+// Connect middleware to handle events post:
+
+var post_event = function(req, res) {
+  /* POST /events */
+  req.form.complete(function(err, fields) {
+    if(err) return error(res, err);
+    var event_name = fields['event']
+      , event_data = fields['data']
+      ;
+    if(!event_name || !event_data) {
+      res.writeHead(400, {}); res.end();
+      return;
+    }
+    data = JSON.parse(event_data);
+    res.writeHead(200, {}); res.end();
+    websocket_listener.broadcast({event: event_name, data: data});
+  });
+};
+
+exports.connector = function(req, res, next) {
+  var url = URL.parse(req.url);
+  if (req.method == "POST" && url.pathname == "/events") post_event(req, res);
+  else next();
 };
 

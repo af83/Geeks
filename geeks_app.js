@@ -2,19 +2,13 @@ var fs = require('fs')
   , URL = require('url')
 
   , config = require('./config')
+  , error = require('./utils').error
   , geeks_events = require('./geeks_events')
   , ms_templates = require('./ms_templates')
   , RFactory = require('./model').RFactory
   ;
 
 var AVATARS_DIR = __dirname + "/public/images/geeks/";
-
-var error = function(res, err) {
-  console.error(err);
-  res.writeHead(500, {'Content-Type': 'text/html'});
-  res.end(err.message);
-};
-
 
 var index = function(req, res) {
   /* Serve the app HTML page. */
