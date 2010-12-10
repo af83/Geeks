@@ -35,7 +35,9 @@ init_geeks = function() {
       top: 0,
       left: 0,
       title: function(geek) {
-        return geek.name + " aka " + geek.nickname;
+        var name = geek.name;
+        if(geek.nickname) name += " aka " + geek.nickname;
+        return name;
       },
       update_callback: function(geek) {
         geek.save();
@@ -53,7 +55,7 @@ init_geeks = function() {
       add_geek(geek);
     });
     events_dispatcher.bind('UpdateGeek', function(json_geek) {
-      var geek = new R.Geek(json_geek);
+      var geek = R.Geek.qau(json_geek);
       geeks_map.remove_object(geek.id);
       geeks_map.add_object(geek, defaults);
       if(window.location.hash == "#/geeks/" + geek.id + "/edit") {

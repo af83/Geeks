@@ -80,8 +80,7 @@ $.sammy(function() {
 
   this.post('#/geeks/:id', function(env) {
     before();
-    var geek = new R.Geek(env.params.toHash());
-    geek.save();
+    R.Geek.update({ids: env.params.id, data: env.params.toHash()});
     this.redirect('#/');
     return false;
   });
