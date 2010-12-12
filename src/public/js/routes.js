@@ -1,7 +1,6 @@
 $.sammy(function() {
 
-  var before_change; // if set, to be ran before every change of url hash
-  
+  var ajax_upload;
   var input_box = $('#input-box'),
       new_geek_link = $('.header ul li a[href="#/geeks/new"]');
 
@@ -11,10 +10,14 @@ $.sammy(function() {
   };
   
   this.before({}, function() {
-    if(before_change) {
-      before_change();
-      before_change = null;
+    input_box.hide();
+    // We remove the file input added previously (if any added):
+    if(ajax_upload) {
+      ajax_upload.disable();
+      $('body div input[name="avatar"]').parent().remove();
+      delete ajax_upload;
     }
+    $('.tool.as_dialog.active').removeClass('active');    
   });
 
   this.get('', function() {
@@ -29,10 +32,6 @@ $.sammy(function() {
     input_box.renders('new_geek.html');
     show_input();
     new_geek_link.addClass('active')
-    before_change = function() {
-      input_box.hide();
-      new_geek_link.removeClass('active');
-    };
   });
 
   this.post('#/geeks', function(env) {
@@ -44,12 +43,10 @@ $.sammy(function() {
 
   this.get('#/geeks/:id/edit', function(env) {
     var id = env.params.id;
-    var ajax_upload;
 
     R.Geek.get({ids: id}, function(geek) {
       input_box.renders('edit_geek.html', geek)
       show_input();
-
       // Avatar uploading:
       ajax_upload = new AjaxUpload('upload_avatar', {
         name: 'avatar',
@@ -65,14 +62,6 @@ $.sammy(function() {
       });
 
     });
-    before_change = function() {
-      input_box.hide();
-      // We remove the file input added previously (if any added):
-      ajax_upload.disable();
-      console.log(ajax_upload._button.parentNode);
-      $('body div input[name="avatar"]').parent().remove();
-      delete ajax_upload;
-    };
   });
 
   this.post('#/geeks/:id', function(env) {
