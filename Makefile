@@ -13,6 +13,7 @@ symlink_js:
 	ln -f -s ../../vendor/js_client/sammy/lib/sammy.js public/js/
 	ln -f -s ../../vendor/mustache.js/mustache.js public/js/
 	ln -f -s ../../vendor/Socket.IO/socket.io.js public/js/
+	ln -f -s ../../vendor/Socket.IO/lib/vendor/web-socket-js/WebSocketMain.swf public/js/
 
 templates_ms:
 	python vendor/jquery.mustache/src/generate_templates.py -d templates/ -l fr -o public/js/

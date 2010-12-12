@@ -7,7 +7,7 @@ exports.db = {
 
 exports.server = {
   port: 3000,
-  websocket_port: 3000
+  websocket_port: 3001
 }
 
 exports.barIrc = {

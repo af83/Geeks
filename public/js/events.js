@@ -6,25 +6,30 @@
  */
 events_dispatcher = (function() {
   var mapper = {};
-  var host = WS_PORT && (window.location.hostname + ':' + WS_PORT)
-             || window.location.host
   var socket;
   
-  (function init_socket() {
-    socket = new io.Socket();
+  var init_socket = function() {
+    WEB_SOCKET_SWF_LOCATION = '/js/WebSocketMain.swf';    
+    socket = new io.Socket(document.domain, {port: WS_PORT});
     
     socket.on('message', function(message) {
       var callback = message.event && mapper[message.event];
       callback && callback(message.data);
     });
 
-    socket.on('disconnect', function() {
-      // The connection has been closed, try to reconnect in 0.5 seconds:
-      setTimeout(init_socket, 500);
-    });
-
+    socket.on('disconnect', check_connection);
     socket.connect();
-  })();
+  };
+
+  var check_connection = function() {
+    if(socket && !socket.connected) {
+      delete socket;
+      init_socket();
+    }
+  };
+
+  init_socket();
+  setInterval(check_connection, 3000);
 
   return {
     bind: function(name, fct) {

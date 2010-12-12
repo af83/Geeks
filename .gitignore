@@ -7,6 +7,7 @@ public/js/jquery.px2percent.js
 public/js/sammy.js
 public/js/mustache.js
 public/js/socket.io.js
+public/js/WebSocketMain.swf
 templates/i18n/*
 public/js/templates_*.js
 
