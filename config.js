@@ -6,11 +6,12 @@ exports.db = {
 }
 
 exports.server = {
+  host: 'localhost',
   port: 3000,
   websocket_port: 3001
 }
 
-exports.barIrc = {
+exports.ircEmitter = {
   network: 'irc.freenode.net',
   nickname: 'geeks_bot',
   channels: ['#af83-lab'],
