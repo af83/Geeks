@@ -8,7 +8,7 @@
 , 'rest-mongo/src'
 , 'Socket.IO-node/lib'
 ].forEach(function(submodule) {
-  require.paths.unshift(__dirname + '/vendor/' + submodule);
+  require.paths.unshift(__dirname + '/../vendor/' + submodule);
 });
 
 var http = require('http')

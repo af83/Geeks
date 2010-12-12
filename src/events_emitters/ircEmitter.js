@@ -3,7 +3,7 @@
 , 'nodetk/src'
 , 'rest-mongo/src'
 ].forEach(function(path){
-  require.paths.unshift(__dirname + '/../vendor/' + path);
+  require.paths.unshift(__dirname + '/../../vendor/' + path);
 });
 
 var irc = require("irc")

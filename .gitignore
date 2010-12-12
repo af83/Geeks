@@ -1,13 +1,13 @@
 .*.swp
-public/images/geeks/*
-public/js/ajaxupload.js
-public/js/jquery.drag_resize.js
-public/js/jquery.mousewheel.js
-public/js/jquery.px2percent.js
-public/js/sammy.js
-public/js/mustache.js
-public/js/socket.io.js
-public/js/WebSocketMain.swf
-templates/i18n/*
-public/js/templates_*.js
+src/public/images/geeks/*
+src/public/js/ajaxupload.js
+src/public/js/jquery.drag_resize.js
+src/public/js/jquery.mousewheel.js
+src/public/js/jquery.px2percent.js
+src/public/js/sammy.js
+src/public/js/mustache.js
+src/public/js/socket.io.js
+src/public/js/WebSocketMain.swf
+src/templates/i18n/*
+src/public/js/templates_*.js
 
