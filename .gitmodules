@@ -40,3 +40,6 @@
 [submodule "vendor/node-formidable"]
 	path = vendor/node-formidable
 	url = git://github.com/felixge/node-formidable.git
+[submodule "vendor/Socket.IO"]
+	path = vendor/Socket.IO
+	url = git://github.com/LearnBoost/Socket.IO.git

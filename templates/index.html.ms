@@ -34,12 +34,13 @@
   <script type="text/javascript" src="/js/jquery-1.4.js"></script>
   <script type="text/javascript" src="/js/sammy.js"></script>
   <script type="text/javascript" src="/js/mustache.js"></script>  
-  <script type="text/javascript" src="/js/events.js"></script>
   <script type="text/javascript" src="/js/jquery.mousewheel.js"></script>
   <script type="text/javascript" src="/js/jquery.drag_resize.js"></script>
   <script type="text/javascript" src="/js/jquery.px2percent.js"></script>
   <script type="text/javascript" src="/js/ajaxupload.js"></script>
+  <script type="text/javascript" src="/js/socket.io.js"></script>  
   <script type="text/javascript" src="/js/routes.js"></script>
+  <script type="text/javascript" src="/js/events.js"></script>  
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/templates_fr.js"></script>  
   <script type="text/javascript" src="/js/init.js"></script>

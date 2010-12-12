@@ -39,8 +39,8 @@ var update_geek = function(req, res, geek_id) {
     R.Geek.get({ids: geek_id}, function(geek) {
       var previous = geek.avatar_fname && parseInt(geek.avatar_fname.split('_')[1]) || 0;
       geek.avatar_fname = geek_id + "_" + (previous + 1);
-      fs.rename(avatar.path, AVATARS_DIR + geek.avatar_fname, function(error) {
-        if(error) return error(res, error);
+      fs.rename(avatar.path, AVATARS_DIR + geek.avatar_fname, function(err) {
+        if(err) return error(res, err);
         res.writeHead(201, {}); res.end();
         geek.save(function() {
           geeks_events.emitter.emit('UPDATE:Geek', [geek_id], geek.json());
