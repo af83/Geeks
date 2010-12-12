@@ -1,12 +1,7 @@
 $.sammy(function() {
 
   var before_change; // if set, to be ran before every change of url hash
-  var before = function() {
-    if(before_change) {
-      before_change();
-      before_change = null;
-    }
-  };
+  
   var input_box = $('#input-box'),
       new_geek_link = $('.header ul li a[href="#/geeks/new"]');
 
@@ -14,7 +9,13 @@ $.sammy(function() {
     input_box.show()
              .find('input').first().focus();
   };
-
+  
+  this.before({}, function() {
+    if(before_change) {
+      before_change();
+      before_change = null;
+    }
+  });
 
   this.get('', function() {
     this.redirect('#/');
@@ -22,11 +23,9 @@ $.sammy(function() {
   });
 
   this.get('#/', function() {
-    before();
   });
 
   this.get('#/geeks/new', function() {
-    before();
     input_box.renders('new_geek.html');
     show_input();
     new_geek_link.addClass('active')
@@ -37,7 +36,6 @@ $.sammy(function() {
   });
 
   this.post('#/geeks', function(env) {
-    before();
     var geek = new R.Geek(env.params.toHash());
     geek.save();
     this.redirect('#/');
@@ -45,7 +43,6 @@ $.sammy(function() {
   });
 
   this.get('#/geeks/:id/edit', function(env) {
-    before();
     var id = env.params.id;
     var ajax_upload;
 
@@ -79,7 +76,6 @@ $.sammy(function() {
   });
 
   this.post('#/geeks/:id', function(env) {
-    before();
     R.Geek.update({ids: env.params.id, data: env.params.toHash()});
     this.redirect('#/');
     return false;
