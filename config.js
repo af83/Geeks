@@ -14,7 +14,8 @@ exports.server = {
 exports.ircEmitter = {
   network: 'irc.freenode.net',
   nickname: 'geeks_bot',
-  channels: ['#af83-lab'],
+  channels_r: ['#af83-lab'], // Where the bot can only read
+  channels_rw: ['#af83-lab2'], // Where the bot can also 'speak'
   debug: true
 }
 
