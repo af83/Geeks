@@ -1,6 +1,7 @@
 
 [ 'node-irc/lib'
 , 'nodetk/src'
+, 'rest-mongo/src'
 ].forEach(function(path){
   require.paths.unshift(__dirname + '/../vendor/' + path);
 });
@@ -12,7 +13,7 @@ var irc = require("irc")
   , config = require("../config")
   , confIRC = config.ircEmitter
   , emitter = require('./emitter')
-  , RFactory = require("../db").RFactory
+  , RFactory = require("../model").RFactory
   ;
 
 var geeks_url = 'http://' + config.server.host;

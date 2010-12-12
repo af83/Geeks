@@ -1,6 +1,8 @@
 
-install: symlink_js
+submodules:
 	git submodule update --init --recursive
+
+install: submodules symlink_js templates_ms
 	cd vendor/mustache.js && mkdir -p lib && \
 		cat mustache-commonjs/mustache.js.tpl.pre mustache.js mustache-commonjs/mustache.js.tpl.post > lib/mustache.js
 
