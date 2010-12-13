@@ -1,10 +1,11 @@
 /* Load some data in DB for dev env.
  */
 
-require.paths.unshift(__dirname + '/../vendor/nodetk/src')
+require.paths.unshift(__dirname + '/../../vendor/nodetk/src')
+require.paths.unshift(__dirname + '/../../vendor/rest-mongo/src')
 
 var sys = require("sys"),
-    RFactory = require("../db").RFactory,
+    RFactory = require("../model").RFactory,
     R = RFactory()
 
 

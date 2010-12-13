@@ -2,7 +2,9 @@
 exports.db = {
   host: 'localhost',
   port: 27017,
-  db_name: 'Geeks_dev'
+  db_name: 'Geeks_dev',
+  // Max number of URLs in DB:
+  max_nb_urls: 200
 }
 
 exports.server = {
