@@ -9,6 +9,9 @@
 
 <body>
   <div class="header">
+    <div class="login">
+      {{email}} | <a href="/logout">Logout</a>
+    </div>
     <ul class="toBeExtended">
       <li>
         <a href="#/geeks/new" class="tool as_dialog">+ new geek</a>

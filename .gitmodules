@@ -43,3 +43,9 @@
 [submodule "vendor/Socket.IO"]
 	path = vendor/Socket.IO
 	url = git://github.com/LearnBoost/Socket.IO.git
+[submodule "vendor/oauth2_client_node"]
+	path = vendor/oauth2_client_node
+	url = git://github.com/AF83/oauth2_client_node.git
+[submodule "vendor/cookie-sessions"]
+	path = vendor/cookie-sessions
+	url = git://github.com/virtuo/cookie-sessions.git
