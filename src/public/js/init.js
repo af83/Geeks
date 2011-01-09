@@ -62,6 +62,11 @@ init_geeks = function() {
         $("#upload_avatar").html('<img src="'+defaults.src(geek)+'" />');
       }
     });
+    events_dispatcher.bind('DeleteGeek', function(data) {
+      data.ids.forEach(function(id) {
+        geeks_map.remove_object(id);
+      });
+    });
 
     var irc_url = $('#irc_urls'),
     add_url = function(url) {

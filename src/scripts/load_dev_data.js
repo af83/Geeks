@@ -10,8 +10,8 @@ var sys = require("sys"),
 
 
 sys.puts('Erasing DB...')
-R.Geek.clear_all(function() {
-  R.URL.clear_all(function() {
+R.Geek.remove(function() {
+  R.URL.remove(function() {
     sys.puts('done');
     insert_data();
   })

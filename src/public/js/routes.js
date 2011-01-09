@@ -64,9 +64,18 @@ $.sammy(function() {
     });
   });
 
-  this.post('#/geeks/:id', function(env) {
+  this.post('/geeks/:id', function(env) {
     R.Geek.update({ids: env.params.id, data: env.params.toHash()});
     this.redirect('#/');
+    return false;
+  });
+
+  this.del('/geeks/:id', function(env) {
+    var self = this;
+    R.Geek.get({ids: env.params.id}, function(geek) {
+      geek.delete_();
+      self.redirect('#/');
+    });
     return false;
   });
 
