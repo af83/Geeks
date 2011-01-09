@@ -44,11 +44,10 @@
   <script type="text/javascript" src="/js/map.js"></script>
   <script type="text/javascript" src="/js/templates_fr.js"></script>  
   <script type="text/javascript" src="/js/init.js"></script>
-  <script type="text/javascript" src="/init_browser.js"></script>
   <script type="text/javascript" src="/yabble.js"></script>
+  <script type="text/javascript" src="/init_browser.js"></script>  
   <script type="text/javascript">
   //<![CDATA[
-    require.reset();
     require.useScriptTags();
     require.setModuleRoot('wrapped_js/');
     require.ensure([

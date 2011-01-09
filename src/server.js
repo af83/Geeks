@@ -30,7 +30,7 @@ var http = require('http')
 // To serve some node JS modules/packages to the browser:
 require.paths.unshift(__dirname);
 var serve_modules_connector = bserver.serve_modules_connector({
-  modules: ['assert', 'util', 'schema'],
+  modules: ['schema'],
   packages: ['nodetk', 'rest-mongo'],
 });
 

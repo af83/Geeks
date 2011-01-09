@@ -32,7 +32,7 @@ emitter.on('DELETE:Geek', function(ids) {
   websocket_listener.broadcast({event: "DeleteGeek", data: data});
 });
 
-emitter.on('DELETE_ALL:Geek', function() {
+emitter.on('REMOVE:Geek', function() {
 });
 // ----------------------------------
 
