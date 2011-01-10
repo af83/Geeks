@@ -34,13 +34,15 @@ var http = require('http')
 
 var oauth2_client_options = {
   // To get info from access_token and set them in session
-  treat_access_token: function(access_token, req, res, callback) {
+  treat_access_token: function(access_token, req, res, callback, fallback) {
     var params = {oauth_token: access_token};
     // TODO: put this in config file!
-    web.GET('http://localhost:8080/auth', params, 
-    function(status_code, headers, data) {
-      var info = JSON.parse(data);
-      req.session.user_email = info.email;
+    web.GET(config.oauth2_client.server_base_url + '/auth', params, 
+    function(status_code, headers, body) {
+      if(status_code != 200) 
+        return fallback("Bad answer from AuthServer: "+status_code+" "+body);
+      var info = JSON.parse(body);
+      req.session.user_email = info.email || info.name;
       callback();
     });
   }
