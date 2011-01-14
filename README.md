@@ -34,7 +34,7 @@ Running
 
 As simple as:
 
-  $ node server.js
+  $ node src/server.js
 
 
 When changing templates files, you should run:
