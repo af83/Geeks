@@ -6,20 +6,16 @@ var fs = require('fs')
   , geeks_events = require('./geeks_events')
   , ms_templates = require('./ms_templates')
   , RFactory = require('./model').RFactory
-  , oauth2_client = require('oauth2_client')
   ;
 
 var AVATARS_DIR = __dirname + "/public/images/geeks/";
 
 var index = function(req, res) {
   /* Serve the app HTML page. */
-  if(!req.session || !req.session.user_email) {
-    return oauth2_client.redirects_for_login(res);
-  }
   res.writeHead(200, {'Content-Type': 'text/HTML; charset=utf-8'});
   var html = ms_templates.render('index.html', {
     ws_port: config.server.websocket_port
-  , email: req.session.user_email
+  , userid: req.session ? req.session.userid : null
   });
   res.end(html);
 };

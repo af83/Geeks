@@ -10,7 +10,9 @@
 <body>
   <div class="header">
     <div class="login">
-      {{email}} | <a href="/logout">Logout</a>
+      {{#userid}}
+        {{userid}} | <a href="/logout">Logout</a>
+      {{/userid}}
     </div>
     <ul class="toBeExtended">
       <li>

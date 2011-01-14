@@ -29,6 +29,7 @@ var http = require('http')
   , ms_templates = require('./ms_templates')
   , RFactory = require('./model').RFactory
   , schema = require('./schema').schema
+  , valid_auth = require('./valid_auth')
   ;
 
 
@@ -43,7 +44,7 @@ var oauth2_client_options = {
       if(status_code != 200)
         return fallback("Bad answer from AuthServer: "+status_code+" "+body);
       var info = JSON.parse(body);
-      req.session.user_email = info.userid || info.name;
+      req.session.userid = info.userid;
       callback();
     });
   }
@@ -58,13 +59,14 @@ var serve_modules_connector = bserver.serve_modules_connector({
 
 // The middlewares stack:
 var server = connect.createServer(
-  connect.staticProvider({root: __dirname + '/public', cache: false})
-, sessions({secret: '123abc', session_key: 'session_geeks'})
+  sessions({secret: '123abc', session_key: 'session_geeks'})
+, oauth2_client.connector(config.oauth2_client, oauth2_client_options)
+, valid_auth.connector()
+, connect.staticProvider({root: __dirname + '/public', cache: false})
 , rest_server.connector(RFactory, schema, {eventEmitter: geeks_events.emitter})
 , connect_form({keepExtensions: true})
 , geeks_app.connector()
 , geeks_events.connector
-, oauth2_client.connector(config.oauth2_client, oauth2_client_options)
 , serve_modules_connector
 );
 
