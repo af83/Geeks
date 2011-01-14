@@ -28,21 +28,35 @@ exports.ircEmitter = {
 
 exports.oauth2_client = {
   enabled: true,
-  base_url: 'http://127.0.0.1:3000',
-  process_login_url: '/oauth2/process',
-  redirect_uri: 'http://127.0.0.1:3000/oauth2/process',
-  login_url: '/login',
-  logout_url: '/logout',
-  default_redirection_url: '/',
 
-  server_base_url: 'http://localhost:8080',
-  server_authorize_endpoint: 'http://localhost:8080/oauth2/authorize',
-  server_token_endpoint: 'http://localhost:8080/oauth2/token',
+  client: {
+    crypt_key: 'toto',
+    sign_key: 'titi',
+    base_url: 'http://127.0.0.1:3000',
+    process_login_url: '/oauth2/process',
+    redirect_uri: 'http://127.0.0.1:3000/oauth2/process',
+    login_url: '/login',
+    logout_url: '/logout',
+    default_redirection_url: '/'
+  },
 
-  client_id: "4d0f675af223750721000008",
-  client_secret: 'some secret string',
-  name: 'geeks',
-  authority: 'localhost',
-  domain: 'geeks.localhost'
+  authority: 'af83.com',
+  domain: 'geeks.af83.com',
+
+  authorization_url: 'https://auth.af83.com/auth',
+
+  default_server: "auth_server",
+
+  servers: {
+    auth_server: {
+      server_authorize_endpoint: 'https://auth.af83.com/oauth2/authorize',
+      server_token_endpoint: 'https://auth.af83.com/oauth2/token',
+
+      client_id: "4d2acdbc8547a75c43000008",
+      client_secret: 'some secret string',
+      name: 'geeks'
+    }
+  }
+
+
 };
-
