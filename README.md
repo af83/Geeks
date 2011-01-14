@@ -16,7 +16,7 @@ Geeks works with node -v v0.3.1
 Git Repository
 --------------
 
-  $ git clone af83@git.af83.com:geeks.git
+  $ git clone git@github.com:AF83/Geeks.git
 
 Geeks depends on a rest-mongo and Socket.IO-node and others, which are vendorized through git submodules.
 To get them and initialize some stuff:
