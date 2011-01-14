@@ -13,6 +13,11 @@ exports.server = {
   websocket_port: 3001
 };
 
+exports.session = {
+  secret: "n0F5z60HmCGpHaznEJAROV5jNH1oXxBAI1XBfXaPMzv",
+  session_key: "geeks"
+};
+
 exports.ircEmitter = {
   network: 'irc.freenode.net',
   nickname: 'geeks_bot',
@@ -22,6 +27,7 @@ exports.ircEmitter = {
 };
 
 exports.oauth2_client = {
+  enabled: true,
   base_url: 'http://127.0.0.1:3000',
   process_login_url: '/oauth2/process',
   redirect_uri: 'http://127.0.0.1:3000/oauth2/process',

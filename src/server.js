@@ -59,7 +59,7 @@ var serve_modules_connector = bserver.serve_modules_connector({
 
 // The middlewares stack:
 var server = connect.createServer(
-  sessions({secret: '123abc', session_key: 'session_geeks'})
+  sessions(config.session)
 , oauth2_client.connector(config.oauth2_client, oauth2_client_options)
 , valid_auth.connector()
 , connect.staticProvider({root: __dirname + '/public', cache: false})
