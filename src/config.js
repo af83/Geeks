@@ -35,6 +35,8 @@ exports.oauth2_client = {
 
   client_id: "4d0f675af223750721000008",
   client_secret: 'some secret string',
-  name: 'geeks'
+  name: 'geeks',
+  authority: 'localhost',
+  domain: 'geeks.localhost'
 };
 
