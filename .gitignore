@@ -5,7 +5,6 @@ src/public/js/jquery.drag_resize.js
 src/public/js/jquery.mousewheel.js
 src/public/js/jquery.px2percent.js
 src/public/js/sammy.js
-src/public/js/mustache.js
 src/public/js/socket.io.js
 src/public/js/WebSocketMain.swf
 src/templates/i18n/*
