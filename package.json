@@ -1,0 +1,13 @@
+{ "name" : "geeks"
+, "version": "0.0.1"
+, "dependencies": {
+  "connect": ""
+, "connect-form": ""
+, "formidable": ""
+, "cookie-sessions": ""
+, "oauth2-client": ""
+, "socket.io": ""
+, "irc": ""
+}
+, "engines" : {"node" : "~0.4.0"}
+}

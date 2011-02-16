@@ -1,4 +1,4 @@
-/* This is where are handled "live" events of the application. 
+/* This is where are handled "live" events of the application.
  */
 var events = require('events')
   , URL = require('url')
@@ -42,7 +42,7 @@ var listen = exports.listen = function(server) {
   /* Plug web-socket on given server to send events to clients. */
   websocket_listener = io.listen(server, {
     resource: "socket.io"
-  , transports: ['websocket', 'server-events', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling']
+  , transports: ['websocket', 'flashsocket', 'htmlfile', 'xhr-multipart', 'xhr-polling']
   });
 };
 

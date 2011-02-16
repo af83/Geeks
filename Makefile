@@ -2,10 +2,9 @@
 submodules:
 	git submodule update --init --recursive
 
-install: submodules symlink_js templates_ms
-	cd vendor/mustache.js && mkdir -p lib && \
-		cat mustache-commonjs/mustache.js.tpl.pre mustache.js mustache-commonjs/mustache.js.tpl.post > lib/mustache.js
 
+install: submodules symlink_js templates_ms
+	npm bundle
 
 symlink_js:
 	ln -f -s ../../../vendor/js_client/ajax-upload/ajaxupload.js src/public/js/
@@ -19,4 +18,3 @@ symlink_js:
 
 templates_ms:
 	python vendor/jquery.mustache/src/generate_templates.py -d src/templates/ -l fr -o src/public/js/
-

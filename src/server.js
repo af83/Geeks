@@ -1,26 +1,18 @@
 
 // Add location of submodules to path:
-[ 'connect/lib'
-, 'connect-form/lib'
-, 'mustache.js/lib'
-, 'node-formidable/lib'
-, 'nodetk/src'
+[ 'nodetk/src'
 , 'rest-mongo/src'
-, 'Socket.IO-node/lib'
-, 'oauth2_client_node/src'
-, 'cookie-sessions/lib'
 ].forEach(function(submodule) {
   require.paths.unshift(__dirname + '/../vendor/' + submodule);
 });
 
 var http = require('http')
-
   , connect = require('connect')
   , connect_form = require('connect-form')
   , sessions = require('cookie-sessions')
   , bserver = require('nodetk/browser/server')
   , rest_server = require('rest-mongo/http_rest/server')
-  , oauth2_client = require('oauth2_client')
+  , oauth2_client = require('oauth2-client')
   , web = require('nodetk/web')
 
   , config = require('./config')

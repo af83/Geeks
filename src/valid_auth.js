@@ -1,5 +1,5 @@
 var config = require('./config')
-, oauth2_client = require('oauth2_client')
+, oauth2_client = require('oauth2-client')
 ;
 
 exports.connector = function() {

@@ -1,42 +1,33 @@
-Geeks
-=====
+# Geeks
 
 Geeks is a web application to show 'real-time' position of persons on a map.
 It is a node.js application, based on connect middlewares framework.
 
+## Installation
 
-Installation
-============
+### Node.js
 
-Node.js
--------
+Geeks works with node -v v0.4.0
 
-Geeks works with node -v v0.3.1
+### Git Repository
 
-Git Repository
---------------
-
-  $ git clone git@github.com:AF83/Geeks.git
+    $> git clone https://github.com/AF83/Geeks.git
 
 Geeks depends on a rest-mongo and Socket.IO-node and others, which are vendorized through git submodules.
 To get them and initialize some stuff:
 
-  $ make install
+    $> make install
 
+### Nodetk
 
-Nodetk
-------
 You should have you nodejs libraries (assert, sys...) located somewhere on your NOTE_PATH environment variable.
 
-
-Running
-=======
+## Running
 
 As simple as:
 
-  $ node src/server.js
-
+    $> node src/server.js
 
 When changing templates files, you should run:
 
-  $ make templates_ms
+    $> make templates_ms
