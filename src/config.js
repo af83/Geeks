@@ -26,6 +26,8 @@ exports.ircEmitter = {
   debug: true
 };
 
+var base_auth_url = "http://localhost:7070";
+
 exports.oauth2_client = {
   enabled: true,
 
@@ -40,23 +42,18 @@ exports.oauth2_client = {
     default_redirection_url: '/'
   },
 
-  authority: 'af83.com',
-  domain: 'geeks.af83.com',
-
-  authorization_url: 'https://auth.af83.com/auth',
+  current_user_url: base_auth_url + '/portable_contacts/@me/@self',
 
   default_server: "auth_server",
 
   servers: {
     auth_server: {
-      server_authorize_endpoint: 'https://auth.af83.com/oauth2/authorize',
-      server_token_endpoint: 'https://auth.af83.com/oauth2/token',
+      server_authorize_endpoint: base_auth_url + '/oauth2/authorize',
+      server_token_endpoint: base_auth_url + '/oauth2/token',
 
-      client_id: "4d2acdbc8547a75c43000008",
+      client_id: "4d540f5d1277275252000005",
       client_secret: 'some secret string',
       name: 'geeks'
     }
   }
-
-
 };

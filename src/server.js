@@ -13,7 +13,7 @@ var http = require('http')
   , bserver = require('nodetk/browser/server')
   , rest_server = require('rest-mongo/http_rest/server')
   , oauth2_client = require('oauth2-client')
-  , web = require('nodetk/web')
+  , request = require('request')
 
   , config = require('./config')
   , geeks_app = require('./geeks_app')
@@ -29,17 +29,19 @@ var oauth2_client_options = {
   auth_server: {
     // To get info from access_token and set them in session
     treat_access_token: function(data, req, res, callback, fallback) {
-      var params = {oauth_token: data.token.access_token,
-                    authority: config.oauth2_client.authority,
-                    domain: config.oauth2_client.domain};
-      web.GET(config.oauth2_client.authorization_url, params,
-              function(status_code, headers, body) {
-                if(status_code != 200)
-                  return fallback("Bad answer from AuthServer: "+status_code+" "+body);
-                var info = JSON.parse(body);
-                req.session.userid = info.userid;
-                callback();
-              });
+      var params = {oauth_token: data.token.access_token};
+      request.get({url: config.oauth2_client.current_user_url,
+                   headers: {'Authorization' : 'OAuth '+ data.token.access_token}
+                  },
+                  function(error, response, body) {
+                    if(error || response.statusCode != 200)
+                      return fallback("Bad answer from AuthServer: "+ response.statusCode+" "+body);
+                    else {
+                      var info = JSON.parse(body);
+                      req.session.userid = info.entry[0].displayName;
+                      callback();
+                    }
+                  });
     }
   }
 };

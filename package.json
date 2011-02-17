@@ -8,6 +8,7 @@
 , "oauth2-client": ""
 , "socket.io": ""
 , "irc": ""
+, "request":""
 }
 , "engines" : {"node" : "~0.4.0"}
 }
