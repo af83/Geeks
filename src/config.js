@@ -1,3 +1,8 @@
+var server_host = 'localhost';
+var server_port = 3000;
+var base_auth_url = "http://localhost:7070";
+
+var base_url = 'http://'+ server_host +':'+ server_port;
 
 exports.db = {
   host: 'localhost',
@@ -8,8 +13,8 @@ exports.db = {
 };
 
 exports.server = {
-  host: 'localhost',
-  port: 3000,
+  host: server_host,
+  port: server_port,
   websocket_port: 3001
 };
 
@@ -26,17 +31,15 @@ exports.ircEmitter = {
   debug: true
 };
 
-var base_auth_url = "http://localhost:7070";
-
 exports.oauth2_client = {
   enabled: true,
 
   client: {
     crypt_key: 'toto',
     sign_key: 'titi',
-    base_url: 'http://127.0.0.1:3000',
+    base_url: base_url,
     process_login_url: '/oauth2/process',
-    redirect_uri: 'http://127.0.0.1:3000/oauth2/process',
+    redirect_uri: base_url +'/oauth2/process',
     login_url: '/login',
     logout_url: '/logout',
     default_redirection_url: '/'
