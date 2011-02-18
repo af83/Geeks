@@ -31,3 +31,7 @@ As simple as:
 When changing templates files, you should run:
 
     $> make templates_ms
+
+## License
+
+AGPLv3
