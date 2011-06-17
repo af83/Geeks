@@ -38,7 +38,7 @@ var oauth2_client_options = {
                       return fallback("Bad answer from AuthServer: "+ response.statusCode+" "+body);
                     else {
                       var info = JSON.parse(body);
-                      req.session.userid = info.entry[0].displayName;
+                      req.session = {userid: info.entry.displayName};
                       callback();
                     }
                   });
@@ -53,12 +53,14 @@ var serve_modules_connector = bserver.serve_modules_connector({
   packages: ['nodetk', 'rest-mongo'],
 });
 
+var oauth2_client_obj = oauth2_client.createClient(config.oauth2_client, oauth2_client_options);
+
 // The middlewares stack:
 var server = connect.createServer(
   sessions(config.session)
-, oauth2_client.connector(config.oauth2_client, oauth2_client_options)
-, valid_auth.connector()
-, connect.staticProvider({root: __dirname + '/public', cache: false})
+, oauth2_client_obj.connector()
+, valid_auth.connector(oauth2_client_obj)
+, connect.static(__dirname + '/public', {cache: false})
 , rest_server.connector(RFactory, schema, {eventEmitter: geeks_events.emitter})
 , connect_form({keepExtensions: true})
 , geeks_app.connector()

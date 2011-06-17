@@ -9,6 +9,7 @@
 , "socket.io": ""
 , "irc": ""
 , "request":""
+, "mustache":""
 }
 , "engines" : {"node" : "~0.4.0"}
 }
